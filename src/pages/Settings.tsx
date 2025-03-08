@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Settings as SettingsIcon, Save, Database, CloudUpload } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,31 +9,6 @@ import { useTrades } from '@/context/TradeContext';
 
 const Settings = () => {
   const { trades } = useTrades();
-  
-  const handleExportData = () => {
-    try {
-      const dataStr = JSON.stringify(trades, null, 2);
-      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-      
-      const exportFileDefaultName = `xcraft-trades-${new Date().toISOString().split('T')[0]}.json`;
-      
-      const linkElement = document.createElement('a');
-      linkElement.setAttribute('href', dataUri);
-      linkElement.setAttribute('download', exportFileDefaultName);
-      linkElement.click();
-      
-      toast({
-        title: 'Export Successful',
-        description: 'Your trade data has been exported successfully.',
-      });
-    } catch (error) {
-      toast({
-        title: 'Export Failed',
-        description: 'There was an error exporting your trade data.',
-        variant: 'destructive',
-      });
-    }
-  };
   
   const handleExportCSV = () => {
     try {
@@ -158,25 +134,14 @@ const Settings = () => {
             <CardDescription>Export, import or clear your trade data</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <Button 
-                onClick={handleExportCSV}
-                variant="outline" 
-                className="w-full"
-              >
-                <Save className="mr-2 h-4 w-4" />
-                Export as CSV
-              </Button>
-              
-              <Button 
-                onClick={handleExportData} 
-                variant="outline" 
-                className="w-full text-xs"
-              >
-                <Save className="mr-2 h-4 w-4" />
-                Export as JSON
-              </Button>
-            </div>
+            <Button 
+              onClick={handleExportCSV}
+              variant="outline" 
+              className="w-full"
+            >
+              <Save className="mr-2 h-4 w-4" />
+              Export as CSV
+            </Button>
             
             <div className="relative">
               <input
