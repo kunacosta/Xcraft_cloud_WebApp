@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Trade, TradeInsert, TradeUpdate } from '@/types/trade';
+import { Trade, TradeInsert, TradeUpdate, TradeType } from '@/types/trade';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from "@/integrations/supabase/client";
 
