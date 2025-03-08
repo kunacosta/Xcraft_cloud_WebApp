@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Settings as SettingsIcon, Save, Database, CloudUpload } from 'lucide-react';
+import { Settings as SettingsIcon, Save, Database, Trash } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -82,34 +82,6 @@ const Settings = () => {
     }
   };
   
-  const handleImportData = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const content = e.target?.result as string;
-        const importedData = JSON.parse(content);
-        
-        // Here we would validate the data and then import it
-        // For now, just show a success message
-        
-        toast({
-          title: 'Import Successful',
-          description: `Imported ${importedData.length} trades.`,
-        });
-      } catch (error) {
-        toast({
-          title: 'Import Failed',
-          description: 'The selected file is not a valid trade data file.',
-          variant: 'destructive',
-        });
-      }
-    };
-    reader.readAsText(file);
-  };
-  
   const handleClearData = () => {
     if (window.confirm('Are you sure you want to clear all trade data? This action cannot be undone.')) {
       localStorage.removeItem('xcraft-trades');
@@ -131,7 +103,7 @@ const Settings = () => {
               <Database className="h-5 w-5 mr-2 text-xcraft-secondary" />
               Data Management
             </CardTitle>
-            <CardDescription>Export, import or clear your trade data</CardDescription>
+            <CardDescription>Export or clear your trade data</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Button 
@@ -143,23 +115,6 @@ const Settings = () => {
               Export as CSV
             </Button>
             
-            <div className="relative">
-              <input
-                type="file"
-                id="import-file"
-                accept=".json"
-                onChange={handleImportData}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <Button 
-                variant="outline" 
-                className="w-full"
-              >
-                <CloudUpload className="mr-2 h-4 w-4" />
-                Import Data
-              </Button>
-            </div>
-            
             <Separator className="my-4" />
             
             <div>
@@ -168,6 +123,7 @@ const Settings = () => {
                 className="w-full"
                 onClick={handleClearData}
               >
+                <Trash className="mr-2 h-4 w-4" />
                 Clear All Data
               </Button>
               <p className="text-xs text-muted-foreground mt-2">
