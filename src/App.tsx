@@ -75,7 +75,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen bg-dark-gradient text-white">
+            <div className="min-h-screen bg-gradient-to-br from-black via-black to-gray-900 text-white">
               <Navbar />
               <AppRoutes />
             </div>
