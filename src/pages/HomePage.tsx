@@ -11,8 +11,8 @@ const HomePage = () => {
       <section className="py-16 md:py-24 container animate-fadeIn">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white to-xcraft-accent bg-clip-text text-transparent">
-              Master Your <span className="text-xcraft-secondary">Forex</span> Trading Journey
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent">
+              Master Your <span className="text-blue-500">Forex</span> Trading Journey
             </h1>
             <p className="text-lg text-gray-300 md:w-4/5">
               Track, analyze, and improve your trading performance with Xcraft's professional forex trading journal.
@@ -46,28 +46,28 @@ const HomePage = () => {
       <section className="py-16 bg-black/40 backdrop-blur-sm">
         <div className="container">
           <h2 className="text-3xl font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-xcraft-secondary to-xcraft-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-500 to-blue-300 bg-clip-text text-transparent">
               Powerful Features
             </span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <FeatureCard 
-              icon={<BarChart2 className="w-10 h-10 text-xcraft-secondary" />}
+              icon={<BarChart2 className="w-10 h-10 text-blue-500" />}
               title="Advanced Analytics"
               description="Gain insights from detailed performance metrics and visualization tools."
             />
             <FeatureCard 
-              icon={<Clock className="w-10 h-10 text-xcraft-secondary" />}
+              icon={<Clock className="w-10 h-10 text-blue-500" />}
               title="Trade History"
               description="Keep a comprehensive record of all your trading activities."
             />
             <FeatureCard 
-              icon={<LineChart className="w-10 h-10 text-xcraft-secondary" />}
+              icon={<LineChart className="w-10 h-10 text-blue-500" />}
               title="Performance Tracking"
               description="Monitor your progress and identify areas for improvement."
             />
             <FeatureCard 
-              icon={<Shield className="w-10 h-10 text-xcraft-secondary" />}
+              icon={<Shield className="w-10 h-10 text-blue-500" />}
               title="Strategy Development"
               description="Document and refine your trading strategies based on results."
             />
@@ -101,7 +101,7 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <div className="glassmorphism rounded-xl p-6 hover:border-xcraft-secondary/50 border border-white/5 transition-all duration-300 card-hover-effect">
+    <div className="card-blue rounded-xl p-6 card-hover-effect">
       <div className="mb-4">
         {icon}
       </div>

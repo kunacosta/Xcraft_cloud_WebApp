@@ -59,8 +59,8 @@ export default {
         },
         xcraft: {
           primary: "#000000",
-          secondary: "#0077B6",
-          accent: "#1E90FF",
+          secondary: "#0077B6", // Updated to match your logo blue
+          accent: "#00B4D8", // Lighter blue for accents
           light: "#EAEAEA",
         },
       },

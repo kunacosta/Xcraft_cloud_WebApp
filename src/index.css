@@ -83,12 +83,13 @@
   }
 }
 
+/* Updated UI Theme Elements */
 .card-hover-effect {
   @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.01];
 }
 
 .glassmorphism {
-  @apply bg-black/30 backdrop-blur-md border border-white/10;
+  @apply bg-black/30 backdrop-blur-md border border-blue-500/20;
 }
 
 /* Button contrast fixes */
@@ -98,4 +99,18 @@
 
 .bg-dark-important {
   background-color: #333 !important;
+}
+
+/* New gradient backgrounds */
+.bg-blue-gradient {
+  @apply bg-gradient-to-br from-blue-600 to-blue-400;
+}
+
+.bg-dark-gradient {
+  @apply bg-gradient-to-br from-black via-gray-900 to-blue-900;
+}
+
+/* Updated card styling */
+.card-blue {
+  @apply bg-black/20 backdrop-blur-sm border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300;
 }

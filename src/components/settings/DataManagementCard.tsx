@@ -8,10 +8,10 @@ import { ClearDataButton } from './ClearDataButton';
 
 export const DataManagementCard = () => {
   return (
-    <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10">
+    <Card className="card-blue">
       <CardHeader>
         <CardTitle className="flex items-center">
-          <Database className="h-5 w-5 mr-2 text-xcraft-secondary" />
+          <Database className="h-5 w-5 mr-2 text-blue-500" />
           Data Management
         </CardTitle>
         <CardDescription>Export or clear your trade data</CardDescription>
