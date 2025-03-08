@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BarChart2, Clock, LineChart, Shield, Sparkles, Rocket, Star } from 'lucide-react';
+import { ArrowRight, BarChart2, Clock, LineChart, Shield, Sparkles, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const HomePage = () => {
@@ -18,7 +18,7 @@ const HomePage = () => {
             <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent">
               Master Your <span className="text-blue-500">Forex</span> Trading Journey
             </h1>
-            <p className="text-lg text-gray-300 md:w-4/5">
+            <p className="text-lg text-white md:w-4/5">
               Track, analyze, and improve your trading performance with our professional forex trading journal.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -43,16 +43,14 @@ const HomePage = () => {
                 alt="Trading charts and data" 
                 className="rounded-lg w-full h-auto object-cover shadow-lg"
               />
-              <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-blue-600 to-blue-400 p-2 rounded-lg shadow-lg">
-                <Star className="h-5 w-5 text-white" />
-              </div>
+              {/* Removed the star element */}
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-black/40 backdrop-blur-sm">
+      <section className="py-16 bg-black/60 backdrop-blur-sm"> {/* Increased opacity for better text visibility */}
         <div className="container">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="h-[1px] w-12 bg-blue-500/50"></div>
@@ -97,8 +95,8 @@ const HomePage = () => {
             <div className="inline-flex items-center justify-center p-2 bg-blue-900/50 rounded-full mb-6">
               <Rocket className="h-6 w-6 text-blue-400" />
             </div>
-            <h2 className="text-3xl font-bold mb-4">Ready to Elevate Your Trading?</h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-white">Ready to Elevate Your Trading?</h2>
+            <p className="text-lg text-white max-w-2xl mx-auto mb-8">
               Join traders worldwide who are achieving consistent results with our professional trading journal.
             </p>
             <Button size="lg" variant="primary-dark" asChild className="group">
@@ -127,7 +125,7 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
         {icon}
       </div>
       <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">{title}</h3>
-      <p className="text-gray-300">{description}</p>
+      <p className="text-white">{description}</p> {/* Changed from text-gray-300 to text-white for better visibility */}
     </div>
   );
 };
