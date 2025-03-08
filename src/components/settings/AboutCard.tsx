@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Sparkles, Star } from 'lucide-react';
 
 export const AboutCard = () => {
   return (
@@ -11,11 +12,12 @@ export const AboutCard = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-center py-4">
-          <img 
-            src="/lovable-uploads/25d1d2e2-bd4f-4e21-8907-0169b19db59a.png" 
-            alt="Xcraft Logo" 
-            className="h-16 w-auto"
-          />
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-blue-300 rounded-full blur opacity-50"></div>
+            <div className="relative flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+          </div>
         </div>
         
         <div className="text-center">
@@ -26,6 +28,14 @@ export const AboutCard = () => {
         <p className="text-sm text-center">
           A professional Forex Trading Journal to help you track, analyze, and improve your trading performance.
         </p>
+        
+        <div className="flex items-center justify-center gap-1 pt-2 text-blue-400">
+          <Star className="h-3 w-3 fill-blue-400" />
+          <Star className="h-4 w-4 fill-blue-400" />
+          <Star className="h-5 w-5 fill-blue-400" />
+          <Star className="h-4 w-4 fill-blue-400" />
+          <Star className="h-3 w-3 fill-blue-400" />
+        </div>
       </CardContent>
     </Card>
   );
