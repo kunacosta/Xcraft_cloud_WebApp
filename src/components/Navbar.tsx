@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { BarChart3, CalendarDays, Home, LogOut, Settings, User, Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -37,14 +36,8 @@ const Navbar = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="relative w-8 h-8 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg"></div>
-              <div className="absolute inset-[2px] bg-white rounded-md flex items-center justify-center">
-                <span className="font-poppins font-bold text-lg gradient-text">X</span>
-              </div>
-            </div>
-            <span className="font-poppins font-bold text-xl gradient-text">
-              Xcraft
+            <span className="font-poppins font-bold text-xl">
+              <span className="text-2xl text-blue-600">X</span><span className="text-black">craft</span>
             </span>
           </Link>
         </div>
