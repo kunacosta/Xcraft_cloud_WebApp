@@ -31,7 +31,7 @@ const ChartCard: React.FC<ChartCardProps> = ({
           <CardDescription className="text-gray-500 mt-1">{description}</CardDescription>
         </div>
         <div className="p-3 bg-blue-100 rounded-full shadow-sm hover:bg-blue-200 transition-colors">
-          <Icon className="h-5 w-5 text-[#003366]" />
+          <Icon className="h-5 w-5 text-blue-600" />
         </div>
       </CardHeader>
       <CardContent className="pt-6 pb-4">

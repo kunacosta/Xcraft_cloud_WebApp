@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center space-x-2">
             <span className="font-poppins font-bold text-xl">
-              <span className="text-2xl text-[#003366]">X</span><span className="text-black">craft</span>
+              <span className="text-2xl text-blue-600">X</span><span className="text-black">craft</span>
             </span>
           </Link>
         </div>
