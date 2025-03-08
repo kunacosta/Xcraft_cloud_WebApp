@@ -87,7 +87,7 @@ const AuthPage = () => {
   return (
     <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-8">
       <div className="w-full max-w-md">
-        <Card className="bg-white shadow-card overflow-hidden border-none">
+        <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 border-none rounded-xl overflow-hidden">
           <div className="bg-gradient-to-r from-xcraft-primary to-xcraft-accent h-2"></div>
           <CardHeader className="space-y-1 pb-3">
             <CardTitle className="text-2xl font-bold text-center text-gray-800">Xcraft Trading</CardTitle>
