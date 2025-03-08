@@ -13,10 +13,11 @@ export interface Trade {
   date: string;
   lotSize: number;
   strategy?: string;
+  user_id?: string;
 }
 
 // Database types
-export type TradeInsert = Omit<Trade, 'id' | 'date'>;
+export type TradeInsert = Omit<Trade, 'id' | 'date' | 'user_id'>;
 export type TradeUpdate = Partial<Trade>;
 
 // Trading strategies

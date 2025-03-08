@@ -2,7 +2,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Trade, TradeInsert, TradeUpdate, TradeType } from '@/types/trade';
 
-// Fetches all trades from Supabase
+// Fetches all trades from Supabase for the current user
 export const fetchTrades = async (): Promise<Trade[]> => {
   const { data, error } = await supabase
     .from('trades')
@@ -25,6 +25,7 @@ export const fetchTrades = async (): Promise<Trade[]> => {
     date: trade.date,
     lotSize: trade.quantity || 1,
     strategy: trade.strategy || '',
+    user_id: trade.user_id
   }));
   
   return formattedTrades;
@@ -33,6 +34,13 @@ export const fetchTrades = async (): Promise<Trade[]> => {
 // Add a new trade to Supabase
 export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> => {
   const { profitLoss, currencyPair, tradeType, entryPrice, exitPrice, lotSize, notes, strategy } = newTrade;
+  
+  // Get the current user
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
   
   // Insert into Supabase
   const { data, error } = await supabase
@@ -47,6 +55,7 @@ export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> 
       notes: notes,
       strategy: strategy || null,
       date: new Date().toISOString(),
+      user_id: user.id
     })
     .select()
     .single();
@@ -67,6 +76,7 @@ export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> 
     date: data.date,
     lotSize: data.quantity || 1,
     strategy: data.strategy || '',
+    user_id: data.user_id
   };
   
   return trade;
