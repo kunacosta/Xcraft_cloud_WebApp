@@ -33,7 +33,7 @@ export const fetchTrades = async (): Promise<Trade[]> => {
 
 // Add a new trade to Supabase
 export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> => {
-  const { profitLoss, currencyPair, tradeType, entryPrice, exitPrice, lotSize, notes, strategy } = newTrade;
+  const { profitLoss, currencyPair, tradeType, entryPrice, exitPrice, lotSize, notes, strategy, date } = newTrade;
   
   // Get the current user
   const { data: { user } } = await supabase.auth.getUser();
@@ -41,6 +41,9 @@ export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> 
   if (!user) {
     throw new Error("User not authenticated");
   }
+  
+  // Format the date to ISO string if it's a Date object
+  const formattedDate = date instanceof Date ? date.toISOString() : date;
   
   // Insert into Supabase
   const { data, error } = await supabase
@@ -54,7 +57,7 @@ export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> 
       profit: profitLoss,
       notes: notes,
       strategy: strategy || null,
-      date: new Date().toISOString(),
+      date: formattedDate,
       user_id: user.id
     })
     .select()
@@ -95,6 +98,12 @@ export const editTradeInSupabase = async (id: string, updatedTrade: TradeUpdate)
   if (updatedTrade.profitLoss !== undefined) updateData.profit = updatedTrade.profitLoss;
   if (updatedTrade.notes !== undefined) updateData.notes = updatedTrade.notes;
   if (updatedTrade.strategy !== undefined) updateData.strategy = updatedTrade.strategy;
+  
+  // Format the date to ISO string if it's a Date object
+  if (updatedTrade.date !== undefined) {
+    updateData.date = updatedTrade.date instanceof Date ? 
+      updatedTrade.date.toISOString() : updatedTrade.date;
+  }
   
   // Update in Supabase
   const { error } = await supabase

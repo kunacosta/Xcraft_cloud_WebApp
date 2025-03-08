@@ -10,14 +10,14 @@ export interface Trade {
   profitLoss: number; // In pips
   amount?: number; // Optional monetary amount
   notes: string;
-  date: string;
+  date: string | Date;
   lotSize: number;
   strategy?: string;
   user_id?: string;
 }
 
 // Database types
-export type TradeInsert = Omit<Trade, 'id' | 'date' | 'user_id'>;
+export type TradeInsert = Omit<Trade, 'id' | 'user_id'>;
 export type TradeUpdate = Partial<Trade>;
 
 // Trading strategies

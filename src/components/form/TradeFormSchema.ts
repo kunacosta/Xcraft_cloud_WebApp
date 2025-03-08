@@ -12,6 +12,9 @@ export const formSchema = z.object({
   amount: z.coerce.number(), // Monetary amount in account currency, calculated automatically
   notes: z.string().optional(),
   strategy: z.string().optional(),
+  date: z.date({
+    required_error: "Please select a date for this trade",
+  }),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

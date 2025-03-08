@@ -35,6 +35,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           amount: initialData.amount,
           notes: initialData.notes,
           strategy: initialData.strategy,
+          date: initialData.date ? new Date(initialData.date) : new Date(),
         }
       : {
           currencyPair: 'EUR/USD',
@@ -46,13 +47,14 @@ const TradeForm: React.FC<TradeFormProps> = ({
           amount: 0, // Initialize amount to 0
           notes: '',
           strategy: '',
+          date: new Date(), // Default to current date and time
         },
   });
 
   const onSubmit = async (values: FormValues) => {    
     try {
       // Get values from form - all calculations have already been done in TradeFormFields component
-      const { currencyPair, tradeType, entryPrice, exitPrice, lotSize, profitLoss, amount, notes, strategy } = values;
+      const { currencyPair, tradeType, entryPrice, exitPrice, lotSize, profitLoss, amount, notes, strategy, date } = values;
       
       if (mode === 'create') {
         await addTrade({
@@ -65,6 +67,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           profitLoss, // Automatically calculated pips
           amount, // Automatically calculated monetary value
           strategy,
+          date, // Include the selected date
         });
       } else if (initialData?.id) {
         await editTrade(initialData.id, {
