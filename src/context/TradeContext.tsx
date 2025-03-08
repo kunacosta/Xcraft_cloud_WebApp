@@ -1,8 +1,13 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Trade, TradeInsert, TradeUpdate, TradeType } from '@/types/trade';
+import { Trade, TradeInsert, TradeUpdate } from '@/types/trade';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from "@/integrations/supabase/client";
+import { 
+  fetchTrades as fetchTradesService,
+  addTradeToSupabase,
+  editTradeInSupabase,
+  deleteTradeFromSupabase
+} from '@/services/tradeService';
 
 interface TradeContextType {
   trades: Trade[];
@@ -31,29 +36,7 @@ export const TradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const fetchTrades = async () => {
     try {
       setLoading(true);
-      
-      const { data, error } = await supabase
-        .from('trades')
-        .select('*')
-        .order('date', { ascending: false });
-      
-      if (error) {
-        throw error;
-      }
-      
-      // Map Supabase data to our Trade interface
-      const formattedTrades: Trade[] = data.map(trade => ({
-        id: trade.id,
-        currencyPair: trade.pair,
-        entryPrice: trade.entry_price,
-        exitPrice: trade.exit_price,
-        tradeType: trade.type as TradeType,
-        profitLoss: trade.profit,
-        notes: trade.notes || '',
-        date: trade.date,
-        lotSize: trade.quantity || 1,
-      }));
-      
+      const formattedTrades = await fetchTradesService();
       setTrades(formattedTrades);
     } catch (error) {
       console.error('Error fetching trades:', error);
@@ -73,41 +56,7 @@ export const TradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const addTrade = async (newTrade: TradeInsert) => {
     try {
-      const { profitLoss, currencyPair, tradeType, entryPrice, exitPrice, lotSize, notes } = newTrade;
-      
-      // Insert into Supabase
-      const { data, error } = await supabase
-        .from('trades')
-        .insert({
-          pair: currencyPair,
-          type: tradeType,
-          entry_price: entryPrice,
-          exit_price: exitPrice,
-          quantity: lotSize,
-          profit: profitLoss,
-          notes: notes,
-          date: new Date().toISOString(),
-        })
-        .select()
-        .single();
-      
-      if (error) {
-        throw error;
-      }
-      
-      // Format the returned data to match our Trade interface
-      const trade: Trade = {
-        id: data.id,
-        currencyPair: data.pair,
-        entryPrice: data.entry_price,
-        exitPrice: data.exit_price,
-        tradeType: data.type as TradeType,
-        profitLoss: data.profit,
-        notes: data.notes || '',
-        date: data.date,
-        lotSize: data.quantity || 1,
-      };
-      
+      const trade = await addTradeToSupabase(newTrade);
       setTrades((prevTrades) => [trade, ...prevTrades]);
       
       toast({
@@ -126,26 +75,7 @@ export const TradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const editTrade = async (id: string, updatedTrade: TradeUpdate) => {
     try {
-      // Prepare update data for Supabase
-      const updateData: any = {};
-      
-      if (updatedTrade.currencyPair) updateData.pair = updatedTrade.currencyPair;
-      if (updatedTrade.tradeType) updateData.type = updatedTrade.tradeType;
-      if (updatedTrade.entryPrice !== undefined) updateData.entry_price = updatedTrade.entryPrice;
-      if (updatedTrade.exitPrice !== undefined) updateData.exit_price = updatedTrade.exitPrice;
-      if (updatedTrade.lotSize !== undefined) updateData.quantity = updatedTrade.lotSize;
-      if (updatedTrade.profitLoss !== undefined) updateData.profit = updatedTrade.profitLoss;
-      if (updatedTrade.notes !== undefined) updateData.notes = updatedTrade.notes;
-      
-      // Update in Supabase
-      const { error } = await supabase
-        .from('trades')
-        .update(updateData)
-        .eq('id', id);
-      
-      if (error) {
-        throw error;
-      }
+      await editTradeInSupabase(id, updatedTrade);
       
       // Update local state
       setTrades((prevTrades) =>
@@ -170,15 +100,7 @@ export const TradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const deleteTrade = async (id: string) => {
     try {
-      // Delete from Supabase
-      const { error } = await supabase
-        .from('trades')
-        .delete()
-        .eq('id', id);
-      
-      if (error) {
-        throw error;
-      }
+      await deleteTradeFromSupabase(id);
       
       // Update local state
       setTrades((prevTrades) => prevTrades.filter((trade) => trade.id !== id));

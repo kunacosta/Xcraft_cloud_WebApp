@@ -3,7 +3,7 @@ import React from 'react';
 import { Trade } from '@/types/trade';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { formatDistanceToNow } from 'date-fns';
-import { ArrowDown, ArrowUp, Edit, Trash } from 'lucide-react';
+import { ArrowDown, ArrowUp, Edit, Trash, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { 
   AlertDialog,
@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { useTrades } from '@/context/TradeContext';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import TradeForm from './TradeForm';
+import { tradingStrategies } from '@/types/trade';
 
 interface TradeCardProps {
   trade: Trade;
@@ -31,6 +32,13 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
   
   const isProfitable = trade.profitLoss > 0;
   const formattedDate = formatDistanceToNow(new Date(trade.date), { addSuffix: true });
+  
+  // Get strategy label from value
+  const getStrategyLabel = (value?: string): string => {
+    if (!value) return '';
+    const strategy = tradingStrategies.find(s => s.value === value);
+    return strategy ? strategy.label : value;
+  };
   
   return (
     <>
@@ -65,6 +73,16 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
               <span className="text-muted-foreground">Lot Size:</span> {trade.lotSize}
             </div>
           </div>
+          
+          {trade.strategy && (
+            <div className="mt-2 mb-2 flex items-center">
+              <Tag className="h-3 w-3 mr-1 text-blue-400" />
+              <span className="text-xs text-blue-400 font-medium">
+                {getStrategyLabel(trade.strategy)}
+              </span>
+            </div>
+          )}
+          
           {trade.notes && (
             <div className="mt-2 text-sm">
               <div className="text-muted-foreground font-medium mb-1">Notes:</div>
