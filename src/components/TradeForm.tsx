@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -84,9 +83,15 @@ const TradeForm: React.FC<TradeFormProps> = ({
     }
     
     if (mode === 'create') {
+      // Fixed: Explicitly add all required properties to ensure they're not optional
       addTrade({
-        ...values,
-        profitLoss,
+        currencyPair: values.currencyPair,
+        tradeType: values.tradeType,
+        entryPrice: values.entryPrice,
+        exitPrice: values.exitPrice,
+        lotSize: values.lotSize,
+        notes: values.notes || "",  // Provide default empty string for optional notes
+        profitLoss: profitLoss,
       });
     } else if (initialData?.id) {
       editTrade(initialData.id, {
