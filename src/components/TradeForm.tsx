@@ -32,6 +32,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           exitPrice: initialData.exitPrice,
           lotSize: initialData.lotSize,
           profitLoss: initialData.profitLoss,
+          amount: initialData.amount,
           notes: initialData.notes,
           strategy: initialData.strategy,
         }
@@ -42,6 +43,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           exitPrice: 0,
           lotSize: 0.1,
           profitLoss: 0,
+          amount: undefined,
           notes: '',
           strategy: '',
         },
@@ -57,7 +59,8 @@ const TradeForm: React.FC<TradeFormProps> = ({
           exitPrice: values.exitPrice,
           lotSize: values.lotSize,
           notes: values.notes || "",
-          profitLoss: values.profitLoss,
+          profitLoss: values.profitLoss, // Automatically calculated pips
+          amount: values.amount, // Manually entered amount
           strategy: values.strategy,
         });
       } else if (initialData?.id) {
