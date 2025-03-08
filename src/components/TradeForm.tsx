@@ -8,7 +8,6 @@ import { Trade } from '@/types/trade';
 import { useTrades } from '@/context/TradeContext';
 import { TradeFormFields } from './form/TradeFormFields';
 import { FormValues, formSchema } from './form/TradeFormSchema';
-import { calculateProfitLoss } from '@/utils/pipCalculator';
 
 interface TradeFormProps {
   onSuccess?: () => void;
@@ -32,6 +31,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           entryPrice: initialData.entryPrice,
           exitPrice: initialData.exitPrice,
           lotSize: initialData.lotSize,
+          profitLoss: initialData.profitLoss,
           notes: initialData.notes,
           strategy: initialData.strategy,
         }
@@ -41,21 +41,13 @@ const TradeForm: React.FC<TradeFormProps> = ({
           entryPrice: 0,
           exitPrice: 0,
           lotSize: 0.1,
+          profitLoss: 0,
           notes: '',
           strategy: '',
         },
   });
 
-  const onSubmit = async (values: FormValues) => {
-    // Calculate P/L using improved calculation
-    const profitLoss = calculateProfitLoss(
-      values.entryPrice,
-      values.exitPrice,
-      values.lotSize,
-      values.tradeType,
-      values.currencyPair
-    );
-    
+  const onSubmit = async (values: FormValues) => {    
     try {
       if (mode === 'create') {
         await addTrade({
@@ -65,13 +57,12 @@ const TradeForm: React.FC<TradeFormProps> = ({
           exitPrice: values.exitPrice,
           lotSize: values.lotSize,
           notes: values.notes || "",
-          profitLoss: profitLoss,
+          profitLoss: values.profitLoss,
           strategy: values.strategy,
         });
       } else if (initialData?.id) {
         await editTrade(initialData.id, {
           ...values,
-          profitLoss,
         });
       }
       

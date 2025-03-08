@@ -116,6 +116,20 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
 
       <FormField
         control={form.control}
+        name="profitLoss"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Profit/Loss (pips)</FormLabel>
+            <FormControl>
+              <Input type="number" step="0.01" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
         name="strategy"
         render={({ field }) => (
           <FormItem>
