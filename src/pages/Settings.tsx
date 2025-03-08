@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Settings as SettingsIcon, Save, Database, CloudUpload } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +29,78 @@ const Settings = () => {
       toast({
         title: 'Export Failed',
         description: 'There was an error exporting your trade data.',
+        variant: 'destructive',
+      });
+    }
+  };
+  
+  const handleExportCSV = () => {
+    try {
+      // CSV header row
+      const headers = [
+        'Currency Pair',
+        'Type',
+        'Entry Price',
+        'Exit Price',
+        'Lot Size',
+        'Profit/Loss (pips)',
+        'Amount',
+        'Strategy',
+        'Notes',
+        'Date'
+      ].join(',');
+      
+      // Convert each trade to CSV row
+      const csvRows = trades.map(trade => {
+        // Format date if it exists
+        const formattedDate = trade.date ? new Date(trade.date).toLocaleString() : '';
+        
+        // Escape notes and strategy fields to handle commas, quotes, etc.
+        const escapeCsvField = (field: string) => {
+          if (!field) return '';
+          // Wrap in quotes and escape any quotes inside the field
+          return `"${String(field).replace(/"/g, '""')}"`;
+        };
+        
+        return [
+          trade.currencyPair,
+          trade.tradeType,
+          trade.entryPrice,
+          trade.exitPrice,
+          trade.lotSize,
+          trade.profitLoss,
+          trade.amount || 0,
+          escapeCsvField(trade.strategy || ''),
+          escapeCsvField(trade.notes || ''),
+          escapeCsvField(formattedDate)
+        ].join(',');
+      });
+      
+      // Combine header with rows
+      const csvContent = [headers, ...csvRows].join('\n');
+      
+      // Create download link
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const exportFileName = `xcraft-trades-${new Date().toISOString().split('T')[0]}.csv`;
+      
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', exportFileName);
+      link.click();
+      
+      // Clean up
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: 'CSV Export Successful',
+        description: 'Your trade data has been exported as CSV successfully.',
+      });
+    } catch (error) {
+      console.error('CSV export error:', error);
+      toast({
+        title: 'CSV Export Failed',
+        description: 'There was an error exporting your trade data as CSV.',
         variant: 'destructive',
       });
     }
@@ -89,30 +160,39 @@ const Settings = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <Button 
-                onClick={handleExportData} 
+                onClick={handleExportCSV}
                 variant="outline" 
                 className="w-full"
               >
                 <Save className="mr-2 h-4 w-4" />
-                Export Data
+                Export as CSV
               </Button>
               
-              <div className="relative">
-                <input
-                  type="file"
-                  id="import-file"
-                  accept=".json"
-                  onChange={handleImportData}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                />
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                >
-                  <CloudUpload className="mr-2 h-4 w-4" />
-                  Import Data
-                </Button>
-              </div>
+              <Button 
+                onClick={handleExportData} 
+                variant="outline" 
+                className="w-full text-xs"
+              >
+                <Save className="mr-2 h-4 w-4" />
+                Export as JSON
+              </Button>
+            </div>
+            
+            <div className="relative">
+              <input
+                type="file"
+                id="import-file"
+                accept=".json"
+                onChange={handleImportData}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <Button 
+                variant="outline" 
+                className="w-full"
+              >
+                <CloudUpload className="mr-2 h-4 w-4" />
+                Import Data
+              </Button>
             </div>
             
             <Separator className="my-4" />
