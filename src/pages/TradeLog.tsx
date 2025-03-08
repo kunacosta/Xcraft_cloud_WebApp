@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTrades } from '@/context/TradeContext';
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,6 @@ import TradeForm from '@/components/TradeForm';
 import TradeCard from '@/components/TradeCard';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trade } from '@/types/trade';
 
 const TradeLog = () => {
   const { trades, loading } = useTrades();
@@ -18,15 +16,12 @@ const TradeLog = () => {
   const [filterType, setFilterType] = useState<'all' | 'buy' | 'sell'>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'profit'>('newest');
   
-  // Filter and sort trades
   const filteredTrades = trades
     .filter(trade => {
-      // Apply search filter
       const matchesSearch = 
         trade.currencyPair.toLowerCase().includes(searchTerm.toLowerCase()) ||
         trade.notes?.toLowerCase().includes(searchTerm.toLowerCase());
       
-      // Apply type filter
       const matchesType = 
         filterType === 'all' || 
         trade.tradeType === filterType;
@@ -34,7 +29,6 @@ const TradeLog = () => {
       return matchesSearch && matchesType;
     })
     .sort((a, b) => {
-      // Apply sorting
       if (sortBy === 'newest') {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       } else if (sortBy === 'oldest') {
@@ -59,7 +53,7 @@ const TradeLog = () => {
         <h1 className="text-3xl font-bold font-montserrat">Trade Log</h1>
         <Button 
           onClick={() => setIsAddTradeOpen(true)}
-          className="bg-xcraft-secondary hover:bg-xcraft-secondary/90"
+          variant="primary-dark"
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           Add Trade

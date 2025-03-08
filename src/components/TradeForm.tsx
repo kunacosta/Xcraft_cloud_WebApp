@@ -88,7 +88,8 @@ const TradeForm: React.FC<TradeFormProps> = ({
         
         <Button 
           type="submit" 
-          className="w-full bg-xcraft-secondary hover:bg-xcraft-secondary/90"
+          className="w-full" 
+          variant="primary-dark"
         >
           {mode === 'create' ? 'Add Trade' : 'Update Trade'}
         </Button>

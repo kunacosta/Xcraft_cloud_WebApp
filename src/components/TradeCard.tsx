@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Trade } from '@/types/trade';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -33,7 +32,6 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
   const isProfitable = trade.profitLoss > 0;
   const formattedDate = formatDistanceToNow(new Date(trade.date), { addSuffix: true });
   
-  // Get strategy label from value
   const getStrategyLabel = (value?: string): string => {
     if (!value) return '';
     const strategy = tradingStrategies.find(s => s.value === value);
@@ -106,8 +104,8 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
           <div className="flex gap-2">
             <Button 
               size="sm" 
-              variant="outline" 
-              className="h-8 px-2 border-xcraft-accent/20 hover:bg-xcraft-accent/10"
+              variant="outline-dark" 
+              className="h-8 px-2"
               onClick={() => setIsEditDialogOpen(true)}
             >
               <Edit className="h-4 w-4" />
@@ -129,7 +127,7 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction 
                     onClick={() => deleteTrade(trade.id)}
-                    className="bg-red-500 hover:bg-red-600"
+                    className="bg-red-500 hover:bg-red-600 text-white"
                   >
                     Delete
                   </AlertDialogAction>

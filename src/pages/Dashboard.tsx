@@ -29,7 +29,7 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold font-montserrat">Dashboard</h1>
         <Button 
           onClick={() => setIsAddTradeOpen(true)}
-          className="bg-xcraft-secondary hover:bg-xcraft-secondary/90"
+          variant="primary-dark"
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           Add Trade

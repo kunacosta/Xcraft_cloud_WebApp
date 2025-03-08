@@ -90,3 +90,12 @@
 .glassmorphism {
   @apply bg-black/30 backdrop-blur-md border border-white/10;
 }
+
+/* Button contrast fixes */
+.text-white-important {
+  color: white !important;
+}
+
+.bg-dark-important {
+  background-color: #333 !important;
+}

@@ -18,12 +18,12 @@ const HomePage = () => {
               Track, analyze, and improve your trading performance with Xcraft's professional forex trading journal.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button size="lg" className="bg-xcraft-secondary hover:bg-xcraft-secondary/90" asChild>
+              <Button size="lg" variant="primary-dark" asChild>
                 <Link to="/dashboard">
                   Get Started <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-xcraft-accent text-white" asChild>
+              <Button size="lg" variant="outline-dark" asChild>
                 <Link to="/log">
                   View Example Trades
                 </Link>
@@ -82,7 +82,7 @@ const HomePage = () => {
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
             Join traders worldwide who are achieving consistent results with Xcraft's trading journal.
           </p>
-          <Button size="lg" className="bg-xcraft-secondary hover:bg-xcraft-secondary/90" asChild>
+          <Button size="lg" variant="primary-dark" asChild>
             <Link to="/dashboard">
               Start Tracking Your Trades <ArrowRight className="ml-2 h-5 w-5" />
             </Link>

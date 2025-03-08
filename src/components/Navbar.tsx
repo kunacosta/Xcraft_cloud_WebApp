@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BarChart3, Calendar, Home, LogOut, Settings, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -76,9 +75,8 @@ const Navbar = () => {
             </DropdownMenu>
           ) : (
             <Button
-              variant="secondary"
+              variant="primary-dark"
               size="sm"
-              className="bg-xcraft-secondary hover:bg-xcraft-secondary/90"
               onClick={() => navigate('/auth')}
             >
               Sign In
