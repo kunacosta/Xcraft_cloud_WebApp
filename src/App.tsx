@@ -25,7 +25,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
+        <div className="animate-pulse text-blue-500">Loading...</div>
       </div>
     );
   }
@@ -75,7 +75,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen bg-gradient-to-br from-black via-black to-gray-900 text-white">
+            <div className="min-h-screen bg-white text-gray-800">
               <Navbar />
               <AppRoutes />
             </div>
