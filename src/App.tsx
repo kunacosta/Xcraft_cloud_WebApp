@@ -25,7 +25,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-pulse text-blue-500">Loading...</div>
+        <div className="flex items-center space-x-2">
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+        </div>
       </div>
     );
   }
@@ -75,9 +79,11 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen bg-white text-gray-800">
+            <div className="min-h-screen bg-background text-foreground subtle-pattern">
               <Navbar />
-              <AppRoutes />
+              <div className="app-container">
+                <AppRoutes />
+              </div>
             </div>
           </BrowserRouter>
         </TradeProvider>
