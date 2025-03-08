@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -8,6 +7,9 @@ import {
 import { Button } from '@/components/ui/button';
 
 const HomePage = () => {
+  // Get current year for copyright
+  const currentYear = new Date().getFullYear();
+  
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       {/* Hero Section */}
@@ -138,7 +140,7 @@ const HomePage = () => {
       
       {/* Footer */}
       <footer className="py-8 text-center text-gray-500 text-sm">
-        <p>© 2023 Xcraft Trading Journal. All rights reserved.</p>
+        <p>© {currentYear} Xcraft Trading Journal. All rights reserved.</p>
         <p className="mt-2">Your data is stored locally in your browser.</p>
       </footer>
     </div>
