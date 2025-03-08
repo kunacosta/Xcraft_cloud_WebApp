@@ -87,10 +87,11 @@ const AuthPage = () => {
   return (
     <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-8">
       <div className="w-full max-w-md">
-        <Card className="bg-black/30 backdrop-blur-sm border-xcraft-accent/10">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Xcraft Trading</CardTitle>
-            <CardDescription className="text-center">
+        <Card className="bg-white shadow-card overflow-hidden border-none">
+          <div className="bg-gradient-to-r from-xcraft-primary to-xcraft-accent h-2"></div>
+          <CardHeader className="space-y-1 pb-3">
+            <CardTitle className="text-2xl font-bold text-center text-gray-800">Xcraft Trading</CardTitle>
+            <CardDescription className="text-center text-gray-600">
               Sign in to your account or create a new one
             </CardDescription>
           </CardHeader>
@@ -107,33 +108,33 @@ const AuthPage = () => {
                   <div className="space-y-2">
                     <Label htmlFor="login-email">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                       <Input 
                         id="login-email"
                         type="email" 
                         placeholder="name@example.com" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
+                        className="pl-10 border-gray-200"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="login-password">Password</Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                       <Input 
                         id="login-password"
                         type="password" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10"
+                        className="pl-10 border-gray-200"
                       />
                     </div>
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button type="submit" className="w-full bg-xcraft-secondary hover:bg-xcraft-secondary/90" disabled={authLoading}>
+                  <Button type="submit" className="w-full btn-gradient" disabled={authLoading}>
                     {authLoading ? "Signing in..." : "Sign In"}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -147,33 +148,33 @@ const AuthPage = () => {
                   <div className="space-y-2">
                     <Label htmlFor="register-email">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                       <Input 
                         id="register-email"
                         type="email" 
                         placeholder="name@example.com" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
+                        className="pl-10 border-gray-200"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="register-password">Password</Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                       <Input 
                         id="register-password"
                         type="password" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10"
+                        className="pl-10 border-gray-200"
                       />
                     </div>
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button type="submit" className="w-full bg-xcraft-secondary hover:bg-xcraft-secondary/90" disabled={authLoading}>
+                  <Button type="submit" className="w-full btn-gradient" disabled={authLoading}>
                     {authLoading ? "Creating Account..." : "Create Account"}
                     <User className="ml-2 h-4 w-4" />
                   </Button>
