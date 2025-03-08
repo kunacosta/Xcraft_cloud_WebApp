@@ -8,8 +8,8 @@ export const formSchema = z.object({
   entryPrice: z.coerce.number().positive("Entry price must be positive"),
   exitPrice: z.coerce.number().positive("Exit price must be positive"),
   lotSize: z.coerce.number().positive("Lot size must be positive"),
-  profitLoss: z.coerce.number(), // This will now be in pips, calculated automatically
-  amount: z.coerce.number().optional(), // Manual input for monetary amount
+  profitLoss: z.coerce.number(), // This will be in pips, calculated automatically
+  amount: z.coerce.number(), // Monetary amount in account currency, calculated automatically
   notes: z.string().optional(),
   strategy: z.string().optional(),
 });

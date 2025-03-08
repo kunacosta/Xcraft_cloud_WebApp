@@ -43,7 +43,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           exitPrice: 0,
           lotSize: 0.1,
           profitLoss: 0,
-          amount: undefined,
+          amount: 0, // Initialize amount to 0
           notes: '',
           strategy: '',
         },
@@ -51,7 +51,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
 
   const onSubmit = async (values: FormValues) => {    
     try {
-      // Get values from form
+      // Get values from form - all calculations have already been done in TradeFormFields component
       const { currencyPair, tradeType, entryPrice, exitPrice, lotSize, profitLoss, amount, notes, strategy } = values;
       
       if (mode === 'create') {
@@ -63,7 +63,7 @@ const TradeForm: React.FC<TradeFormProps> = ({
           lotSize,
           notes: notes || "",
           profitLoss, // Automatically calculated pips
-          amount, // Manually entered amount
+          amount, // Automatically calculated monetary value
           strategy,
         });
       } else if (initialData?.id) {

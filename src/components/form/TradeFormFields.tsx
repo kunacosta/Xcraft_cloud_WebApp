@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -6,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { UseFormReturn, useWatch } from 'react-hook-form';
 import { FormValues, currencyPairs } from './TradeFormSchema';
 import { tradingStrategies } from '@/types/trade';
+import { calculatePips, calculatePipValue, calculateMonetaryValue } from '@/utils/pipCalculator';
 
 interface TradeFormFieldsProps {
   form: UseFormReturn<FormValues>;
@@ -36,30 +38,30 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
     name: "currencyPair",
     defaultValue: "EUR/USD"
   });
+  
+  const lotSize = useWatch({
+    control: form.control,
+    name: "lotSize",
+    defaultValue: 0.1
+  });
 
-  // Calculate pips whenever entry price, exit price, or trade type changes
+  // Calculate pips and monetary value whenever relevant values change
   useEffect(() => {
     if (entryPrice && exitPrice) {
-      // Determine pip multiplier based on currency pair
-      // For JPY pairs, 1 pip = 0.01, for most other pairs 1 pip = 0.0001 (but we use 1000 as multiplier)
-      const isJpyPair = currencyPair.includes('JPY');
-      const pipMultiplier = isJpyPair ? 100 : 1000;
-      
-      // Calculate pips based on the difference between entry and exit prices
-      let pipDifference = 0;
-      
-      // For buy trades: exitPrice - entryPrice
-      // For sell trades: entryPrice - exitPrice
-      if (tradeType === 'buy') {
-        pipDifference = (exitPrice - entryPrice) * pipMultiplier;
-      } else {
-        pipDifference = (entryPrice - exitPrice) * pipMultiplier;
-      }
+      // Calculate pips based on the standard formula
+      const pips = calculatePips(entryPrice, exitPrice, currencyPair, tradeType);
       
       // Update the form with the calculated pips
-      form.setValue("profitLoss", Number(pipDifference.toFixed(2)));
+      form.setValue("profitLoss", Number(pips.toFixed(2)));
+      
+      // If we have a lot size, calculate the monetary value
+      if (lotSize) {
+        const pipValue = calculatePipValue(currencyPair);
+        const monetaryValue = calculateMonetaryValue(pips, pipValue, lotSize);
+        form.setValue("amount", Number(monetaryValue.toFixed(2)));
+      }
     }
-  }, [entryPrice, exitPrice, tradeType, currencyPair, form]);
+  }, [entryPrice, exitPrice, tradeType, currencyPair, lotSize, form]);
 
   return (
     <>
@@ -182,9 +184,9 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Amount ($) - Manual Input</FormLabel>
+              <FormLabel>Amount ($) - Auto-calculated</FormLabel>
               <FormControl>
-                <Input type="number" step="0.01" placeholder="Enter monetary value" {...field} />
+                <Input type="number" step="0.01" {...field} readOnly className="bg-gray-100" />
               </FormControl>
               <FormMessage />
             </FormItem>
