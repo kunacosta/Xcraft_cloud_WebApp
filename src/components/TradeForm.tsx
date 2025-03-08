@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -82,30 +83,33 @@ const TradeForm: React.FC<TradeFormProps> = ({
       profitLoss = (entryPrice - exitPrice) * 10000 * lotSize; // Simplified calculation
     }
     
-    if (mode === 'create') {
-      // Fixed: Explicitly add all required properties to ensure they're not optional
-      addTrade({
-        currencyPair: values.currencyPair,
-        tradeType: values.tradeType,
-        entryPrice: values.entryPrice,
-        exitPrice: values.exitPrice,
-        lotSize: values.lotSize,
-        notes: values.notes || "",  // Provide default empty string for optional notes
-        profitLoss: profitLoss,
-      });
-    } else if (initialData?.id) {
-      editTrade(initialData.id, {
-        ...values,
-        profitLoss,
-      });
-    }
-    
-    if (onSuccess) {
-      onSuccess();
-    }
-    
-    if (mode === 'create') {
-      form.reset();
+    try {
+      if (mode === 'create') {
+        await addTrade({
+          currencyPair: values.currencyPair,
+          tradeType: values.tradeType,
+          entryPrice: values.entryPrice,
+          exitPrice: values.exitPrice,
+          lotSize: values.lotSize,
+          notes: values.notes || "",
+          profitLoss: profitLoss,
+        });
+      } else if (initialData?.id) {
+        await editTrade(initialData.id, {
+          ...values,
+          profitLoss,
+        });
+      }
+      
+      if (onSuccess) {
+        onSuccess();
+      }
+      
+      if (mode === 'create') {
+        form.reset();
+      }
+    } catch (error) {
+      console.error('Error submitting trade:', error);
     }
   };
 

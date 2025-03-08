@@ -12,3 +12,7 @@ export interface Trade {
   date: string;
   lotSize: number;
 }
+
+// Database types
+export type TradeInsert = Omit<Trade, 'id' | 'date'>;
+export type TradeUpdate = Partial<Trade>;
