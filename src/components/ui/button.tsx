@@ -22,12 +22,15 @@ const buttonVariants = cva(
         // Add new high-contrast variants
         'primary-dark': "bg-xcraft-secondary text-white hover:bg-xcraft-secondary/90",
         'outline-dark': "border border-xcraft-secondary/50 bg-transparent text-white hover:bg-xcraft-secondary/20",
+        'gradient': "bg-gradient-to-r from-xcraft-primary to-xcraft-accent text-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1",
+        'glass': "bg-white/20 backdrop-filter backdrop-blur-lg border border-white/10 text-gray-800 hover:bg-white/30",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        pill: "h-10 px-6 rounded-full",
       },
     },
     defaultVariants: {

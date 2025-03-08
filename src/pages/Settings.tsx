@@ -17,26 +17,31 @@ const Settings = () => {
         <h1 className="text-3xl font-bold font-poppins text-gray-800">Settings</h1>
       </div>
       
-      <Tabs defaultValue="data">
-        <div className="flex justify-between items-center mb-6">
-          <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full sm:w-auto bg-gray-100">
-            <TabsTrigger value="data" className="flex items-center gap-2 data-[state=active]:bg-white">
-              <Database className="h-4 w-4" /> Data
-            </TabsTrigger>
-            <TabsTrigger value="about" className="flex items-center gap-2 data-[state=active]:bg-white">
-              <ShieldCheck className="h-4 w-4" /> About
-            </TabsTrigger>
-          </TabsList>
-        </div>
-        
-        <TabsContent value="data" className="space-y-4">
-          <DataManagementCard />
-        </TabsContent>
-        
-        <TabsContent value="about" className="space-y-4">
-          <AboutCard />
-        </TabsContent>
-      </Tabs>
+      <Card className="glossy-card border-none shadow-lg overflow-hidden">
+        <div className="bg-gradient-to-r from-xcraft-primary to-xcraft-accent h-2"></div>
+        <CardContent className="p-6">
+          <Tabs defaultValue="data">
+            <div className="flex justify-between items-center mb-6">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full sm:w-auto bg-gray-100">
+                <TabsTrigger value="data" className="flex items-center gap-2 data-[state=active]:bg-white">
+                  <Database className="h-4 w-4" /> Data
+                </TabsTrigger>
+                <TabsTrigger value="about" className="flex items-center gap-2 data-[state=active]:bg-white">
+                  <ShieldCheck className="h-4 w-4" /> About
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <TabsContent value="data" className="space-y-4">
+              <DataManagementCard />
+            </TabsContent>
+            
+            <TabsContent value="about" className="space-y-4">
+              <AboutCard />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
       
       <div className="text-xs text-center text-gray-400 pt-4">
         <p>Xcraft Trading Journal - Your data is stored locally in your browser</p>

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
-import { ArrowRight, Mail, Lock, User } from 'lucide-react';
+import { ArrowRight, Mail, Lock, User, CheckCircle } from 'lucide-react';
 
 const AuthPage = () => {
   const { user, signIn, signUp, loading } = useAuth();
@@ -85,11 +85,16 @@ const AuthPage = () => {
   }
 
   return (
-    <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-8">
-      <div className="w-full max-w-md">
-        <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 border-none rounded-xl overflow-hidden">
+    <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-8 dot-pattern">
+      <div className="w-full max-w-md animate-fadeIn">
+        <Card className="glossy-card shadow-lg hover:shadow-xl transition-all duration-300 border-none overflow-hidden">
           <div className="bg-gradient-to-r from-xcraft-primary to-xcraft-accent h-2"></div>
           <CardHeader className="space-y-1 pb-3">
+            <div className="flex justify-center mb-2">
+              <div className="p-2 bg-blue-50 rounded-full">
+                <User className="h-8 w-8 text-blue-600" />
+              </div>
+            </div>
             <CardTitle className="text-2xl font-bold text-center text-gray-800">Xcraft Trading</CardTitle>
             <CardDescription className="text-center text-gray-600">
               Sign in to your account or create a new one
@@ -115,7 +120,7 @@ const AuthPage = () => {
                         placeholder="name@example.com" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 border-gray-200"
+                        className="pl-10 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -128,7 +133,7 @@ const AuthPage = () => {
                         type="password" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 border-gray-200"
+                        className="pl-10 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -155,7 +160,7 @@ const AuthPage = () => {
                         placeholder="name@example.com" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 border-gray-200"
+                        className="pl-10 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -168,9 +173,13 @@ const AuthPage = () => {
                         type="password" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 border-gray-200"
+                        className="pl-10 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
+                  </div>
+                  <div className="text-xs text-gray-500 flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+                    <span>Password must be at least 6 characters long</span>
                   </div>
                 </CardContent>
                 <CardFooter>
@@ -182,6 +191,10 @@ const AuthPage = () => {
               </form>
             </TabsContent>
           </Tabs>
+          
+          <div className="p-4 text-center text-xs text-gray-500">
+            <p>Your data is securely stored and protected</p>
+          </div>
         </Card>
       </div>
     </div>
