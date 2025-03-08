@@ -41,9 +41,9 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
   useEffect(() => {
     if (entryPrice && exitPrice) {
       // Determine pip multiplier based on currency pair
-      // For JPY pairs, 1 pip = 0.01, for most other pairs 1 pip = 0.0001
+      // For JPY pairs, 1 pip = 0.01, for most other pairs 1 pip = 0.0001 (but we use 1000 as multiplier)
       const isJpyPair = currencyPair.includes('JPY');
-      const pipMultiplier = isJpyPair ? 100 : 10000;
+      const pipMultiplier = isJpyPair ? 100 : 1000;
       
       // Calculate pips based on the difference between entry and exit prices
       let pipDifference = 0;
