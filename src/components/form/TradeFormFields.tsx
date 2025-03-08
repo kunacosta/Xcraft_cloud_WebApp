@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -31,25 +30,36 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
     name: "tradeType",
     defaultValue: "buy"
   });
+  
+  const currencyPair = useWatch({
+    control: form.control,
+    name: "currencyPair",
+    defaultValue: "EUR/USD"
+  });
 
   // Calculate pips whenever entry price, exit price, or trade type changes
   useEffect(() => {
     if (entryPrice && exitPrice) {
+      // Determine pip multiplier based on currency pair
+      // For JPY pairs, 1 pip = 0.01, for most other pairs 1 pip = 0.0001
+      const isJpyPair = currencyPair.includes('JPY');
+      const pipMultiplier = isJpyPair ? 100 : 10000;
+      
       // Calculate pips based on the difference between entry and exit prices
       let pipDifference = 0;
       
       // For buy trades: exitPrice - entryPrice
       // For sell trades: entryPrice - exitPrice
       if (tradeType === 'buy') {
-        pipDifference = (exitPrice - entryPrice) * 10000; // Convert to pips (4 decimal places)
+        pipDifference = (exitPrice - entryPrice) * pipMultiplier;
       } else {
-        pipDifference = (entryPrice - exitPrice) * 10000; // Convert to pips (4 decimal places)
+        pipDifference = (entryPrice - exitPrice) * pipMultiplier;
       }
       
       // Update the form with the calculated pips
       form.setValue("profitLoss", Number(pipDifference.toFixed(2)));
     }
-  }, [entryPrice, exitPrice, tradeType, form]);
+  }, [entryPrice, exitPrice, tradeType, currencyPair, form]);
 
   return (
     <>

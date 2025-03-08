@@ -51,17 +51,20 @@ const TradeForm: React.FC<TradeFormProps> = ({
 
   const onSubmit = async (values: FormValues) => {    
     try {
+      // Get values from form
+      const { currencyPair, tradeType, entryPrice, exitPrice, lotSize, profitLoss, amount, notes, strategy } = values;
+      
       if (mode === 'create') {
         await addTrade({
-          currencyPair: values.currencyPair,
-          tradeType: values.tradeType,
-          entryPrice: values.entryPrice,
-          exitPrice: values.exitPrice,
-          lotSize: values.lotSize,
-          notes: values.notes || "",
-          profitLoss: values.profitLoss, // Automatically calculated pips
-          amount: values.amount, // Manually entered amount
-          strategy: values.strategy,
+          currencyPair,
+          tradeType,
+          entryPrice,
+          exitPrice,
+          lotSize,
+          notes: notes || "",
+          profitLoss, // Automatically calculated pips
+          amount, // Manually entered amount
+          strategy,
         });
       } else if (initialData?.id) {
         await editTrade(initialData.id, {
