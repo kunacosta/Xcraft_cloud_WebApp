@@ -24,17 +24,17 @@ const ChartCard: React.FC<ChartCardProps> = ({
   className = "" 
 }) => {
   return (
-    <Card className={`chart-card border border-gray-100 ${className}`}>
-      <CardHeader className="bg-gradient-to-r from-blue-50 to-white pb-3 flex flex-row items-center justify-between">
+    <Card className={`chart-card border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 ${className}`}>
+      <CardHeader className="bg-gradient-to-r from-blue-50 to-white pb-3 flex flex-row items-center justify-between border-b border-gray-100">
         <div>
           <CardTitle className="text-lg font-medium text-gray-800">{title}</CardTitle>
-          <CardDescription className="text-gray-500">{description}</CardDescription>
+          <CardDescription className="text-gray-500 mt-1">{description}</CardDescription>
         </div>
-        <div className="p-2 bg-blue-100 rounded-full">
-          <Icon className="h-5 w-5 text-blue-500" />
+        <div className="p-3 bg-blue-100 rounded-full shadow-sm hover:bg-blue-200 transition-colors">
+          <Icon className="h-5 w-5 text-blue-600" />
         </div>
       </CardHeader>
-      <CardContent className="pt-4">
+      <CardContent className="pt-6 pb-4">
         {children}
       </CardContent>
     </Card>
