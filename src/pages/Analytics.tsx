@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import EmptyState from '@/components/EmptyState';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
-import { TrendingUp, CircleDollarSign, BarChart3, PieChart as PieChartIcon } from 'lucide-react';
+import { TrendingUp, CircleDollarSign, BarChart3, PieChartIcon, Lightbulb } from 'lucide-react';
 
 const Analytics = () => {
   const { trades, loading } = useTrades();
@@ -85,7 +85,7 @@ const Analytics = () => {
   if (trades.length === 0) {
     return (
       <div className="container py-8">
-        <h1 className="text-3xl font-bold font-montserrat mb-8">Analytics</h1>
+        <h1 className="text-3xl font-bold font-poppins mb-8">Analytics</h1>
         <div className="min-h-[400px] flex items-center justify-center">
           <EmptyState
             title="No data to analyze"
@@ -103,7 +103,7 @@ const Analytics = () => {
   
   return (
     <div className="container py-8 space-y-8 animate-fadeIn">
-      <h1 className="text-3xl font-bold font-poppins relative inline-block mb-6">
+      <h1 className="text-3xl font-bold font-poppins relative inline-block mb-8">
         <span className="relative z-10">Analytics Dashboard</span>
         <span className="absolute bottom-0 left-0 w-full h-3 bg-blue-100 rounded-sm -z-10 transform -rotate-1"></span>
       </h1>
@@ -130,7 +130,7 @@ const Analytics = () => {
                   backgroundColor: '#ffffff', 
                   borderColor: '#e2e8f0',
                   borderRadius: '8px',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 4px 15px -3px rgba(0, 0, 0, 0.1), 0 2px 6px -2px rgba(0, 0, 0, 0.05)',
                 }} 
               />
               <Area 
@@ -160,7 +160,7 @@ const Analytics = () => {
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
-                paddingAngle={2}
+                paddingAngle={3}
               >
                 {currencyPairData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -171,7 +171,7 @@ const Analytics = () => {
                   backgroundColor: '#ffffff', 
                   borderColor: '#e2e8f0',
                   borderRadius: '8px',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 4px 15px -3px rgba(0, 0, 0, 0.1), 0 2px 6px -2px rgba(0, 0, 0, 0.05)',
                 }} 
               />
               <Legend />
@@ -195,7 +195,7 @@ const Analytics = () => {
                   backgroundColor: '#ffffff', 
                   borderColor: '#e2e8f0',
                   borderRadius: '8px',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 4px 15px -3px rgba(0, 0, 0, 0.1), 0 2px 6px -2px rgba(0, 0, 0, 0.05)',
                 }} 
               />
               <Legend />
@@ -206,12 +206,12 @@ const Analytics = () => {
         </ChartCard>
       </div>
       
-      <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mt-6">
-        <div className="flex items-center text-blue-600 mb-2">
-          <PieChartIcon className="h-5 w-5 mr-2" />
-          <h3 className="font-medium">Data Insights</h3>
+      <div className="bg-blue-50 rounded-lg p-6 border border-blue-100 mt-6 shadow-card">
+        <div className="flex items-center text-blue-600 mb-3">
+          <Lightbulb className="h-5 w-5 mr-2" />
+          <h3 className="font-medium text-lg">Data Insights</h3>
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-gray-600">
           Charts display your trading activity across different time periods and instruments. 
           Add more trades to see richer data visualization and trends.
         </p>
@@ -236,13 +236,15 @@ const ChartCard: React.FC<ChartCardProps> = ({
   className = "" 
 }) => {
   return (
-    <Card className={`bg-white shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 overflow-hidden ${className}`}>
+    <Card className={`chart-card border border-gray-100 ${className}`}>
       <CardHeader className="bg-gradient-to-r from-blue-50 to-white pb-3 flex flex-row items-center justify-between">
         <div>
           <CardTitle className="text-lg font-medium text-gray-800">{title}</CardTitle>
           <CardDescription className="text-gray-500">{description}</CardDescription>
         </div>
-        <Icon className="h-5 w-5 text-blue-500" />
+        <div className="p-2 bg-blue-100 rounded-full">
+          <Icon className="h-5 w-5 text-blue-500" />
+        </div>
       </CardHeader>
       <CardContent className="pt-4">
         {children}
