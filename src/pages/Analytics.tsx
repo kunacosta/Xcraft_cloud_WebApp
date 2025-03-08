@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import EmptyState from '@/components/EmptyState';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { TrendingUp, CircleDollarSign, BarChart3, PieChart as PieChartIcon } from 'lucide-react';
 
 const Analytics = () => {
   const { trades, loading } = useTrades();
@@ -71,7 +72,7 @@ const Analytics = () => {
     ];
   };
   
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
+  const COLORS = ['#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#dbeafe'];
   
   if (loading) {
     return (
@@ -102,77 +103,151 @@ const Analytics = () => {
   
   return (
     <div className="container py-8 space-y-8 animate-fadeIn">
-      <h1 className="text-3xl font-bold font-montserrat">Analytics</h1>
+      <h1 className="text-3xl font-bold font-poppins relative inline-block mb-6">
+        <span className="relative z-10">Analytics Dashboard</span>
+        <span className="absolute bottom-0 left-0 w-full h-3 bg-blue-100 rounded-sm -z-10 transform -rotate-1"></span>
+      </h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10">
-          <CardHeader>
-            <CardTitle>Profit/Loss Over Time</CardTitle>
-            <CardDescription>Cumulative performance by day</CardDescription>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={profitLossData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="date" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip contentStyle={{ backgroundColor: '#111', borderColor: '#333' }} />
-                <Area type="monotone" dataKey="netPL" stroke="#0077B6" fill="#0077B6" fillOpacity={0.3} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        <ChartCard 
+          title="Profit/Loss Over Time" 
+          description="Cumulative performance by day"
+          icon={TrendingUp}
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={profitLossData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+              <XAxis dataKey="date" stroke="#64748b" fontSize={12} />
+              <YAxis stroke="#64748b" fontSize={12} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: '#ffffff', 
+                  borderColor: '#e2e8f0',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                }} 
+              />
+              <Area 
+                type="monotone" 
+                dataKey="netPL" 
+                stroke="#3b82f6" 
+                fill="url(#colorProfit)" 
+                strokeWidth={2}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartCard>
         
-        <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10">
-          <CardHeader>
-            <CardTitle>Top Currency Pairs</CardTitle>
-            <CardDescription>Most traded currency pairs</CardDescription>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={currencyPairData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {currencyPairData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#111', borderColor: '#333' }} />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        <ChartCard 
+          title="Top Currency Pairs" 
+          description="Most traded currency pairs"
+          icon={CircleDollarSign}
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={currencyPairData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+                paddingAngle={2}
+              >
+                {currencyPairData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: '#ffffff', 
+                  borderColor: '#e2e8f0',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                }} 
+              />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </ChartCard>
         
-        <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10 lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Trade Performance by Type</CardTitle>
-            <CardDescription>Comparison of buy vs sell performance</CardDescription>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={tradeTypeData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="name" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip contentStyle={{ backgroundColor: '#111', borderColor: '#333' }} />
-                <Legend />
-                <Bar dataKey="profit" stackId="a" fill="#00C49F" name="Profitable Trades" />
-                <Bar dataKey="loss" stackId="a" fill="#FF8042" name="Losing Trades" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        <ChartCard 
+          title="Trade Performance by Type" 
+          description="Comparison of buy vs sell performance"
+          icon={BarChart3}
+          className="lg:col-span-2"
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={tradeTypeData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+              <XAxis dataKey="name" stroke="#64748b" fontSize={12} />
+              <YAxis stroke="#64748b" fontSize={12} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: '#ffffff', 
+                  borderColor: '#e2e8f0',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                }} 
+              />
+              <Legend />
+              <Bar dataKey="profit" stackId="a" fill="#10b981" name="Profitable Trades" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="loss" stackId="a" fill="#f43f5e" name="Losing Trades" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </div>
+      
+      <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mt-6">
+        <div className="flex items-center text-blue-600 mb-2">
+          <PieChartIcon className="h-5 w-5 mr-2" />
+          <h3 className="font-medium">Data Insights</h3>
+        </div>
+        <p className="text-sm text-gray-600">
+          Charts display your trading activity across different time periods and instruments. 
+          Add more trades to see richer data visualization and trends.
+        </p>
       </div>
     </div>
+  );
+};
+
+interface ChartCardProps {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  children: React.ReactNode;
+  className?: string;
+}
+
+const ChartCard: React.FC<ChartCardProps> = ({ 
+  title, 
+  description, 
+  icon: Icon, 
+  children,
+  className = "" 
+}) => {
+  return (
+    <Card className={`bg-white shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 overflow-hidden ${className}`}>
+      <CardHeader className="bg-gradient-to-r from-blue-50 to-white pb-3 flex flex-row items-center justify-between">
+        <div>
+          <CardTitle className="text-lg font-medium text-gray-800">{title}</CardTitle>
+          <CardDescription className="text-gray-500">{description}</CardDescription>
+        </div>
+        <Icon className="h-5 w-5 text-blue-500" />
+      </CardHeader>
+      <CardContent className="pt-4">
+        {children}
+      </CardContent>
+    </Card>
   );
 };
 
