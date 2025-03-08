@@ -119,8 +119,8 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
       
       {Object.keys(stats.tradesByStrategy).length > 1 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10">
-            <CardHeader className="pb-2">
+          <Card className="bg-white shadow-card border border-xcraft-accent/10">
+            <CardHeader className="pb-2 bg-gradient-to-r from-blue-50 to-white">
               <CardTitle className="text-sm font-medium">Performance by Strategy</CardTitle>
             </CardHeader>
             <CardContent>
@@ -134,7 +134,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
                         <span className={`text-sm font-medium ${data.profit > 0 ? 'text-green-500' : 'text-red-500'}`}>
                           {data.profit > 0 ? '+' : ''}{data.profit.toFixed(2)} pips
                         </span>
-                        <span className="text-xs text-muted-foreground ml-2">
+                        <span className="text-xs text-gray-500 ml-2">
                           ({data.count} trades)
                         </span>
                       </div>
@@ -144,8 +144,8 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
             </CardContent>
           </Card>
           
-          <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10">
-            <CardHeader className="pb-2">
+          <Card className="bg-white shadow-card border border-xcraft-accent/10">
+            <CardHeader className="pb-2 bg-gradient-to-r from-blue-50 to-white">
               <CardTitle className="text-sm font-medium">Performance by Pair</CardTitle>
             </CardHeader>
             <CardContent>
@@ -160,7 +160,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
                         <span className={`text-sm font-medium ${data.profit > 0 ? 'text-green-500' : 'text-red-500'}`}>
                           {data.profit > 0 ? '+' : ''}{data.profit.toFixed(2)} pips
                         </span>
-                        <span className="text-xs text-muted-foreground ml-2">
+                        <span className="text-xs text-gray-500 ml-2">
                           ({data.count} trades)
                         </span>
                       </div>
@@ -187,24 +187,24 @@ const StatCard: React.FC<StatCardProps> = ({
   title, value, icon: Icon, description, trend 
 }) => {
   return (
-    <Card className="bg-black/30 backdrop-blur-sm border border-xcraft-accent/10">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
+    <Card className="bg-white shadow-card border border-xcraft-accent/10">
+      <CardHeader className="flex flex-row items-center justify-between pb-2 bg-gradient-to-r from-blue-50 to-white">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <Icon className={`h-4 w-4 ${
           trend === 'positive' ? 'text-green-500' : 
           trend === 'negative' ? 'text-red-500' : 
-          'text-muted-foreground'
+          'text-gray-500'
         }`} />
       </CardHeader>
       <CardContent>
         <div className={`text-2xl font-bold ${
           trend === 'positive' ? 'text-green-500' : 
           trend === 'negative' ? 'text-red-500' : 
-          'text-foreground'
+          'text-gray-800'
         }`}>
           {value}
         </div>
-        <p className="text-xs text-muted-foreground mt-1">
+        <p className="text-xs text-gray-500 mt-1">
           {description}
         </p>
       </CardContent>

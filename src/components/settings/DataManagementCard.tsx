@@ -9,8 +9,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 export const DataManagementCard = () => {
   return (
-    <Card className="elegant-card overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-100">
+    <Card className="elegant-card overflow-hidden shadow-card">
+      <CardHeader className="bg-gradient-to-r from-blue-50 to-white border-b border-gray-100">
         <CardTitle className="flex items-center text-gray-800">
           <div className="p-2 bg-blue-100 rounded-lg mr-3">
             <Database className="h-5 w-5 text-blue-600" />
@@ -31,7 +31,7 @@ export const DataManagementCard = () => {
           Export or clear your trade data
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6 p-6">
+      <CardContent className="space-y-6 p-6 bg-white">
         <div className="group">
           <h3 className="text-sm font-medium mb-2 flex items-center">
             <span className="text-blue-600 mr-1">•</span> Export Your Data

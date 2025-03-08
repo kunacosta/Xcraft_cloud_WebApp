@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Trade } from '@/types/trade';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -41,41 +42,42 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
   return (
     <>
       <Card className={cn(
-        "overflow-hidden card-hover-effect bg-black/30 backdrop-blur-sm border border-xcraft-accent/10",
+        "overflow-hidden card-hover-effect shadow-card",
+        "bg-white border border-xcraft-accent/10",
         isProfitable ? "border-l-green-500" : "border-l-red-500",
         "border-l-4"
       )}>
-        <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between bg-black/20">
+        <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between bg-gradient-to-r from-blue-50 to-white">
           <div className="flex items-center">
             <span className="text-lg font-montserrat font-bold">{trade.currencyPair}</span>
             <span className={cn(
               "ml-2 text-xs font-medium px-2 py-0.5 rounded-full",
-              trade.tradeType === 'buy' ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
+              trade.tradeType === 'buy' ? "bg-green-500/20 text-green-600" : "bg-red-500/20 text-red-600"
             )}>
               {trade.tradeType === 'buy' ? 'BUY' : 'SELL'}
             </span>
           </div>
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-gray-600">
             {formattedDate}
           </div>
         </CardHeader>
         <CardContent className="p-4 pt-3">
           <div className="flex justify-between mb-2">
             <div className="text-sm">
-              <span className="text-muted-foreground">Entry:</span> {trade.entryPrice.toFixed(5)}
+              <span className="text-gray-600">Entry:</span> {trade.entryPrice.toFixed(5)}
             </div>
             <div className="text-sm">
-              <span className="text-muted-foreground">Exit:</span> {trade.exitPrice.toFixed(5)}
+              <span className="text-gray-600">Exit:</span> {trade.exitPrice.toFixed(5)}
             </div>
             <div className="text-sm">
-              <span className="text-muted-foreground">Lot Size:</span> {trade.lotSize}
+              <span className="text-gray-600">Lot Size:</span> {trade.lotSize}
             </div>
           </div>
           
           {trade.strategy && (
             <div className="mt-2 mb-2 flex items-center">
-              <Tag className="h-3 w-3 mr-1 text-blue-400" />
-              <span className="text-xs text-blue-400 font-medium">
+              <Tag className="h-3 w-3 mr-1 text-blue-500" />
+              <span className="text-xs text-blue-500 font-medium">
                 {getStrategyLabel(trade.strategy)}
               </span>
             </div>
@@ -83,12 +85,12 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
           
           {trade.notes && (
             <div className="mt-2 text-sm">
-              <div className="text-muted-foreground font-medium mb-1">Notes:</div>
-              <p className="text-sm">{trade.notes}</p>
+              <div className="text-gray-600 font-medium mb-1">Notes:</div>
+              <p className="text-sm text-gray-800">{trade.notes}</p>
             </div>
           )}
         </CardContent>
-        <CardFooter className="p-4 flex justify-between bg-black/10">
+        <CardFooter className="p-4 flex justify-between bg-gray-50">
           <div className="flex items-center">
             {isProfitable ? 
               <ArrowUp className="h-4 w-4 text-green-500 mr-1" /> : 
@@ -104,7 +106,7 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
           <div className="flex gap-2">
             <Button 
               size="sm" 
-              variant="outline-dark" 
+              variant="outline" 
               className="h-8 px-2"
               onClick={() => setIsEditDialogOpen(true)}
             >

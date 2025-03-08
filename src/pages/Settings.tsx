@@ -19,11 +19,11 @@ const Settings = () => {
       
       <Tabs defaultValue="data">
         <div className="flex justify-between items-center mb-6">
-          <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full sm:w-auto">
-            <TabsTrigger value="data" className="flex items-center gap-2">
+          <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full sm:w-auto bg-gray-100">
+            <TabsTrigger value="data" className="flex items-center gap-2 data-[state=active]:bg-white">
               <Database className="h-4 w-4" /> Data
             </TabsTrigger>
-            <TabsTrigger value="about" className="flex items-center gap-2">
+            <TabsTrigger value="about" className="flex items-center gap-2 data-[state=active]:bg-white">
               <ShieldCheck className="h-4 w-4" /> About
             </TabsTrigger>
           </TabsList>
