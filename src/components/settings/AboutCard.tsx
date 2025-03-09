@@ -14,7 +14,7 @@ export const AboutCard = () => {
           <img 
             src="/lovable-uploads/25d1d2e2-bd4f-4e21-8907-0169b19db59a.png" 
             alt="Xcraft Logo" 
-            className="h-16 w-auto"
+            className="h-28 w-auto" // Increased from h-16 to h-28 for a larger image
           />
         </div>
         
