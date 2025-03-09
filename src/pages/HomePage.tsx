@@ -44,9 +44,9 @@ const HomePage = () => {
                 <div className="absolute inset-0 bg-blue-100 rounded-3xl rotate-3 scale-105 opacity-50"></div>
                 <div className="glass-effect p-6 rounded-2xl shadow-xl relative z-10">
                   <img 
-                    src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80" 
-                    alt="Trading charts and data" 
-                    className="rounded-lg w-full h-auto object-cover shadow-lg"
+                    src="/lovable-uploads/2312935f-deaa-4c75-9799-e7304efeeb32.png" 
+                    alt="Xcraft Trading Charts" 
+                    className="rounded-lg w-full h-auto object-contain shadow-lg"
                   />
                   <div className="absolute -bottom-5 -right-5 bg-white p-3 rounded-xl shadow-lg">
                     <TrendingUp className="h-10 w-10 text-green-500" />
