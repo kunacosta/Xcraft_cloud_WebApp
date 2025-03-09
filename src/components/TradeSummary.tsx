@@ -46,13 +46,22 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
       bestStrategy = { strategy, profit: data.profit };
     }
   });
+
+  // Format currency
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    }).format(value);
+  };
   
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard 
           title="Net Profit/Loss" 
-          value={`${stats.netProfit > 0 ? '+' : ''}${stats.netProfit.toFixed(2)} pips`}
+          value={`${stats.netProfit > 0 ? '+' : ''}${formatCurrency(stats.netProfit)}`}
           icon={stats.netProfit > 0 ? TrendingUp : TrendingDown}
           description={`From ${stats.totalTrades} total trades`}
           trend={stats.netProfit > 0 ? 'positive' : 'negative'}
@@ -68,15 +77,15 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
         
         <StatCard 
           title="Avg. Win" 
-          value={`${stats.avgProfit.toFixed(2)} pips`}
+          value={`${formatCurrency(stats.avgProfit)}`}
           icon={ArrowUp}
-          description={`Total: ${stats.totalProfit.toFixed(2)} pips`}
+          description={`Total: ${formatCurrency(stats.totalProfit)}`}
           trend="positive"
         />
         
         <StatCard 
           title="Avg. Loss" 
-          value={`${stats.avgLoss.toFixed(2)} pips`}
+          value={`${formatCurrency(stats.avgLoss)}`}
           icon={ArrowDown}
           description={`Risk/Reward: ${typeof stats.riskRewardRatio === 'number' ? stats.riskRewardRatio.toFixed(2) : stats.riskRewardRatio}`}
           trend="negative"
@@ -102,9 +111,9 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
         
         <StatCard 
           title="Largest Win" 
-          value={`${stats.largestWin.toFixed(2)} pips`}
+          value={`${formatCurrency(stats.largestWin)}`}
           icon={Target}
-          description={`vs ${stats.largestLoss.toFixed(2)} pips largest loss`}
+          description={`vs ${formatCurrency(stats.largestLoss)} largest loss`}
           trend="positive"
         />
         
@@ -112,7 +121,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
           title="Best Performer" 
           value={bestPair.pair || 'N/A'}
           icon={PieChart}
-          description={bestPair.pair ? `${bestPair.profit.toFixed(2)} pips total profit` : 'No profitable pairs yet'}
+          description={bestPair.pair ? `${formatCurrency(bestPair.profit)} total profit` : 'No profitable pairs yet'}
           trend="neutral"
         />
       </div>
@@ -132,7 +141,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
                       <span className="text-sm">{strategy === 'Unknown' ? 'No Strategy' : getStrategyName(strategy)}</span>
                       <div className="flex items-center">
                         <span className={`text-sm font-medium ${data.profit > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                          {data.profit > 0 ? '+' : ''}{data.profit.toFixed(2)} pips
+                          {data.profit > 0 ? '+' : ''}{formatCurrency(data.profit)}
                         </span>
                         <span className="text-xs text-gray-500 ml-2">
                           ({data.count} trades)
@@ -158,7 +167,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
                       <span className="text-sm">{pair}</span>
                       <div className="flex items-center">
                         <span className={`text-sm font-medium ${data.profit > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                          {data.profit > 0 ? '+' : ''}{data.profit.toFixed(2)} pips
+                          {data.profit > 0 ? '+' : ''}{formatCurrency(data.profit)}
                         </span>
                         <span className="text-xs text-gray-500 ml-2">
                           ({data.count} trades)
