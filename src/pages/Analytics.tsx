@@ -1,18 +1,14 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useTrades } from '@/context/TradeContext';
 import EmptyState from '@/components/EmptyState';
 import ProfitLossChart from '@/components/analytics/ProfitLossChart';
 import CurrencyPairChart from '@/components/analytics/CurrencyPairChart';
 import TradeTypeChart from '@/components/analytics/TradeTypeChart';
 import DataInsights from '@/components/analytics/DataInsights';
-import ComprehensiveReport from '@/components/analytics/ComprehensiveReport';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, FileText } from 'lucide-react';
 
 const Analytics = () => {
   const { trades, loading } = useTrades();
-  const [showFullReport, setShowFullReport] = useState(false);
 
   if (loading) {
     return (
@@ -51,31 +47,15 @@ const Analytics = () => {
         <p className="text-gray-600 ml-1">Visualize your trading performance and insights</p>
       </div>
       
-      <div className="flex justify-end mb-2">
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2"
-          onClick={() => setShowFullReport(!showFullReport)}
-        >
-          <FileText className="h-4 w-4" />
-          {showFullReport ? 'Hide Full Report' : 'View Full Report'}
-          {showFullReport ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </Button>
-      </div>
-      
-      {showFullReport ? (
-        <ComprehensiveReport />
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="lg:col-span-2">
-            <ProfitLossChart trades={trades} />
-          </div>
-          <CurrencyPairChart trades={trades} />
-          <div className="lg:col-span-2">
-            <TradeTypeChart trades={trades} />
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="lg:col-span-2">
+          <ProfitLossChart trades={trades} />
         </div>
-      )}
+        <CurrencyPairChart trades={trades} />
+        <div className="lg:col-span-2">
+          <TradeTypeChart trades={trades} />
+        </div>
+      </div>
       
       <DataInsights />
     </div>
