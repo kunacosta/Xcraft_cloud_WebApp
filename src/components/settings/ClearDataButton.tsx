@@ -15,28 +15,24 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useNavigate } from 'react-router-dom';
 
 export const ClearDataButton = () => {
   const { toast } = useToast();
-  const { trades } = useTrades();
+  const { trades, clearAllTrades } = useTrades();
   const [isClearing, setIsClearing] = useState(false);
+  const navigate = useNavigate();
   
   const handleClearData = async () => {
     try {
       setIsClearing(true);
       
-      // If we're using Supabase, the data is already managed through TradeContext
-      // No need to directly interact with localStorage
+      // Call the clearAllTrades function from TradeContext
+      await clearAllTrades();
       
-      // Just reload the page after showing success toast
-      toast({
-        title: "Data cleared successfully",
-        description: "All your trading data has been removed.",
-      });
-      
-      // Short delay before reload to allow toast to be seen
+      // Short delay before redirect to allow toast to be seen
       setTimeout(() => {
-        window.location.href = '/dashboard';
+        navigate('/dashboard');
       }, 1500);
       
     } catch (error) {

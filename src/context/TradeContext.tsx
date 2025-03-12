@@ -6,7 +6,8 @@ import {
   fetchTrades as fetchTradesService,
   addTradeToSupabase,
   editTradeInSupabase,
-  deleteTradeFromSupabase
+  deleteTradeFromSupabase,
+  clearAllTradesFromSupabase
 } from '@/services/tradeService';
 
 interface TradeContextType {
@@ -14,6 +15,7 @@ interface TradeContextType {
   addTrade: (trade: TradeInsert) => Promise<void>;
   editTrade: (id: string, trade: TradeUpdate) => Promise<void>;
   deleteTrade: (id: string) => Promise<void>;
+  clearAllTrades: () => Promise<void>;
   loading: boolean;
 }
 
@@ -119,8 +121,30 @@ export const TradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const clearAllTrades = async () => {
+    try {
+      await clearAllTradesFromSupabase();
+      
+      // Update local state
+      setTrades([]);
+      
+      toast({
+        title: 'All Trades Deleted',
+        description: 'All trades have been removed from your journal',
+      });
+    } catch (error) {
+      console.error('Error clearing all trades:', error);
+      toast({
+        title: 'Error Clearing Trades',
+        description: 'Your trades could not be deleted from the database',
+        variant: 'destructive',
+      });
+      throw error; // Re-throw to handle in calling component
+    }
+  };
+
   return (
-    <TradeContext.Provider value={{ trades, addTrade, editTrade, deleteTrade, loading }}>
+    <TradeContext.Provider value={{ trades, addTrade, editTrade, deleteTrade, clearAllTrades, loading }}>
       {children}
     </TradeContext.Provider>
   );
