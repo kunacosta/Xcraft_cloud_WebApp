@@ -32,11 +32,6 @@ const HomePage = () => {
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-full" asChild>
-                  <Link to="/log">
-                    View Example Trades
-                  </Link>
-                </Button>
               </div>
             </div>
             <div className="flex-1 mt-10 md:mt-0">
@@ -184,3 +179,4 @@ const BenefitCard = ({ icon, title, description }: BenefitCardProps) => {
 };
 
 export default HomePage;
+
