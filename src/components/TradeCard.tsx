@@ -20,14 +20,17 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
   const { deleteTrade } = useTrades();
   const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
   
-  const isProfitable = trade.profitLoss > 0;
+  // Ensure we have valid amount value and determine if profitable
+  const amount = trade.amount || 0;
+  const isProfitable = amount > 0.005; // Add small threshold to avoid floating point issues
   
   return (
     <>
       <Card className={cn(
         "overflow-hidden card-hover-effect shadow-card",
         "bg-white border border-xcraft-accent/10",
-        isProfitable ? "border-l-green-500" : "border-l-red-500",
+        isProfitable ? "border-l-green-500" : 
+        amount < -0.005 ? "border-l-red-500" : "border-l-gray-300", // Use neutral color for zero
         "border-l-4"
       )}>
         <CardHeader trade={trade} />
@@ -39,7 +42,7 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
         <CardFooter className="p-4 flex justify-between bg-gray-50">
           <ProfitLossIndicator 
             profitLoss={trade.profitLoss} 
-            amount={trade.amount || 0} 
+            amount={amount} 
           />
           <CardActions 
             onEdit={() => setIsEditDialogOpen(true)} 
@@ -58,4 +61,3 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
 };
 
 export default TradeCard;
-

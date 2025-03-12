@@ -9,20 +9,28 @@ interface ProfitLossIndicatorProps {
 }
 
 export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profitLoss, amount }) => {
-  const isProfitable = amount > 0;
+  // Fix for displaying zero values correctly
+  const formattedAmount = Math.abs(amount) < 0.005 ? 0 : amount;
+  const isProfitable = formattedAmount > 0;
   
   return (
     <div className="flex items-center">
       {isProfitable ? 
         <ArrowUp className="h-4 w-4 text-green-500 mr-1" /> : 
-        <ArrowDown className="h-4 w-4 text-red-500 mr-1" />
+        formattedAmount === 0 ?
+          null : // Don't show arrow for zero
+          <ArrowDown className="h-4 w-4 text-red-500 mr-1" />
       }
       <span className={cn(
         "font-medium",
-        isProfitable ? "text-green-500" : "text-red-500"
+        formattedAmount > 0 ? "text-green-500" : 
+        formattedAmount < 0 ? "text-red-500" : "text-gray-500" // neutral color for zero
       )}>
         <DollarSign className="h-3 w-3 inline" />
-        {isProfitable ? "" : "-"}{Math.abs(amount).toFixed(2)}
+        {formattedAmount === 0 
+          ? "0.00" 
+          : `${isProfitable ? "" : "-"}${Math.abs(formattedAmount).toFixed(2)}`
+        }
       </span>
     </div>
   );

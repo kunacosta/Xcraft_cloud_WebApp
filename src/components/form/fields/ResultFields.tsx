@@ -19,7 +19,14 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
           <FormItem>
             <FormLabel>Profit/Loss (pips)</FormLabel>
             <FormControl>
-              <Input type="number" step="0.01" {...field} readOnly className="bg-gray-100" />
+              <Input 
+                type="number" 
+                step="0.01" 
+                {...field} 
+                readOnly 
+                className="bg-gray-100" 
+                value={field.value || 0} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -33,7 +40,14 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
           <FormItem>
             <FormLabel>Profit/Loss ($)</FormLabel>
             <FormControl>
-              <Input type="number" step="0.01" {...field} readOnly className="bg-gray-100" />
+              <Input 
+                type="number" 
+                step="0.01" 
+                {...field} 
+                readOnly 
+                className="bg-gray-100" 
+                value={field.value || 0} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
