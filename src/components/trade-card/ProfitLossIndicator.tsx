@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowDown, ArrowUp, DollarSign } from 'lucide-react';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProfitLossIndicatorProps {

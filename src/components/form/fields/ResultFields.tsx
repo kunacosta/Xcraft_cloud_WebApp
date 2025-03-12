@@ -23,8 +23,7 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
                 type="number" 
                 step="0.01" 
                 {...field} 
-                readOnly 
-                className="bg-gray-100" 
+                className="bg-white" 
                 value={field.value ?? 0} 
               />
             </FormControl>
@@ -44,8 +43,7 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
                 type="number" 
                 step="0.01" 
                 {...field} 
-                readOnly 
-                className="bg-gray-100" 
+                className="bg-white" 
                 value={field.value ?? 0} 
               />
             </FormControl>
