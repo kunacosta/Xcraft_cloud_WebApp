@@ -58,7 +58,11 @@ export const calculateAdvancedStats = (
     : 0;
 
   const allReturns = trades.map(trade => trade.amount || 0);
-  const averageTradeReturn = trades.length > 0 ? basicStats.netProfit / trades.length : 0;
+  
+  // Calculate totalProfitLoss from trades directly instead of using basicStats.netProfit
+  const totalProfitLoss = trades.reduce((sum, trade) => sum + (trade.amount || 0), 0);
+  const averageTradeReturn = trades.length > 0 ? totalProfitLoss / trades.length : 0;
+  
   const medianTradeReturn = calculateMedian(allReturns);
 
   let tradeFrequency = 'N/A';
@@ -95,3 +99,4 @@ const calculateMedian = (values: number[]): number => {
   
   return sorted[middle];
 };
+
