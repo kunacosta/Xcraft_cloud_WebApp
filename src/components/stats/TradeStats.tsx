@@ -31,17 +31,17 @@ export interface TradeStatistics {
 }
 
 export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
-  // Basic statistics
+  // Basic statistics based on amount (dollar values) instead of pips
   const totalTrades = trades.length;
-  const winningTrades = trades.filter(trade => trade.profitLoss > 0).length;
-  const losingTrades = trades.filter(trade => trade.profitLoss <= 0).length;
+  const winningTrades = trades.filter(trade => (trade.amount || 0) > 0).length;
+  const losingTrades = trades.filter(trade => (trade.amount || 0) <= 0).length;
   
-  const winningTradesArr = trades.filter(trade => trade.profitLoss > 0);
-  const losingTradesArr = trades.filter(trade => trade.profitLoss <= 0);
+  const winningTradesArr = trades.filter(trade => (trade.amount || 0) > 0);
+  const losingTradesArr = trades.filter(trade => (trade.amount || 0) <= 0);
   
-  const totalProfit = winningTradesArr.reduce((sum, trade) => sum + trade.profitLoss, 0);
-  const totalLoss = Math.abs(losingTradesArr.reduce((sum, trade) => sum + trade.profitLoss, 0));
-  const netProfit = totalProfit - totalLoss;
+  const totalProfit = winningTradesArr.reduce((sum, trade) => sum + (trade.amount || 0), 0);
+  const totalLoss = Math.abs(losingTradesArr.reduce((sum, trade) => sum + (trade.amount || 0), 0));
+  const netProfit = trades.reduce((sum, trade) => sum + (trade.amount || 0), 0);
   
   const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
   
@@ -65,7 +65,7 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
   );
   
   sortedTrades.forEach(trade => {
-    if (trade.profitLoss > 0) {
+    if ((trade.amount || 0) > 0) {
       // Winning trade
       currentConsecutiveWins++;
       currentConsecutiveLosses = 0;
@@ -84,15 +84,15 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
   
   // Find largest win and loss
   const largestWin = winningTradesArr.length > 0 
-    ? Math.max(...winningTradesArr.map(t => t.profitLoss))
+    ? Math.max(...winningTradesArr.map(t => t.amount || 0))
     : 0;
     
   const largestLoss = losingTradesArr.length > 0 
-    ? Math.abs(Math.min(...losingTradesArr.map(t => t.profitLoss)))
+    ? Math.abs(Math.min(...losingTradesArr.map(t => t.amount || 0)))
     : 0;
   
   // Average and median trade return
-  const allReturns = trades.map(trade => trade.profitLoss);
+  const allReturns = trades.map(trade => trade.amount || 0);
   const averageTradeReturn = totalTrades > 0 ? netProfit / totalTrades : 0;
   
   // Calculate median
@@ -108,17 +108,17 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
     tradeFrequency = `${tradesPerDay.toFixed(1)} trades/day`;
   }
   
-  // Calculate drawdown
-  const { maxDrawdown, maxDrawdownPercentage } = calculateDrawdown(sortedTrades.reverse()); // Oldest to newest
+  // Calculate drawdown (using dollar amounts)
+  const { maxDrawdown, maxDrawdownPercentage } = calculateDrawdown(sortedTrades.reverse(), 'amount'); // Oldest to newest
   
-  // Calculate Sharpe Ratio (simplified version using 0 as risk-free rate)
-  const returns = calculatePeriodicReturns(sortedTrades);
+  // Calculate Sharpe Ratio using dollar returns
+  const returns = calculatePeriodicReturns(sortedTrades, 'amount');
   const sharpeRatio = calculateSharpeRatio(returns);
   
   // Calculate expectancy
   const expectancy = (winRate / 100) * avgProfit - ((100 - winRate) / 100) * avgLoss;
   
-  // Breakdown by currency pair with win rate
+  // Breakdown by currency pair with win rate (using dollar values)
   const tradesByPair: Record<string, { count: number, profit: number, winRate: number }> = {};
   
   trades.forEach(trade => {
@@ -126,17 +126,17 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
       tradesByPair[trade.currencyPair] = { count: 0, profit: 0, winRate: 0 };
     }
     tradesByPair[trade.currencyPair].count++;
-    tradesByPair[trade.currencyPair].profit += trade.profitLoss;
+    tradesByPair[trade.currencyPair].profit += (trade.amount || 0);
   });
   
-  // Calculate win rate for each pair
+  // Calculate win rate for each pair (using dollar amounts)
   Object.keys(tradesByPair).forEach(pair => {
     const pairTrades = trades.filter(t => t.currencyPair === pair);
-    const wins = pairTrades.filter(t => t.profitLoss > 0).length;
+    const wins = pairTrades.filter(t => (t.amount || 0) > 0).length;
     tradesByPair[pair].winRate = pairTrades.length > 0 ? (wins / pairTrades.length) * 100 : 0;
   });
 
-  // Breakdown by strategy with win rate
+  // Breakdown by strategy with win rate (using dollar amounts)
   const tradesByStrategy: Record<string, { count: number, profit: number, winRate: number }> = {};
   
   trades.forEach(trade => {
@@ -145,17 +145,17 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
       tradesByStrategy[strategy] = { count: 0, profit: 0, winRate: 0 };
     }
     tradesByStrategy[strategy].count++;
-    tradesByStrategy[strategy].profit += trade.profitLoss;
+    tradesByStrategy[strategy].profit += (trade.amount || 0);
   });
   
-  // Calculate win rate for each strategy
+  // Calculate win rate for each strategy (using dollar amounts)
   Object.keys(tradesByStrategy).forEach(strategy => {
     const strategyTrades = trades.filter(t => (t.strategy || 'Unknown') === strategy);
-    const wins = strategyTrades.filter(t => t.profitLoss > 0).length;
+    const wins = strategyTrades.filter(t => (t.amount || 0) > 0).length;
     tradesByStrategy[strategy].winRate = strategyTrades.length > 0 ? (wins / strategyTrades.length) * 100 : 0;
   });
   
-  // Monthly performance breakdown
+  // Monthly performance breakdown (using dollar amounts)
   const monthlyPerformance: Record<string, { count: number, profit: number, winRate: number }> = {};
   
   trades.forEach(trade => {
@@ -167,10 +167,10 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
     }
     
     monthlyPerformance[yearMonth].count++;
-    monthlyPerformance[yearMonth].profit += trade.profitLoss;
+    monthlyPerformance[yearMonth].profit += (trade.amount || 0);
   });
   
-  // Calculate win rate for each month
+  // Calculate win rate for each month (using dollar amounts)
   Object.keys(monthlyPerformance).forEach(month => {
     const monthTrades = trades.filter(t => {
       const date = new Date(t.date);
@@ -178,7 +178,7 @@ export const calculateTradeStatistics = (trades: Trade[]): TradeStatistics => {
       return yearMonth === month;
     });
     
-    const wins = monthTrades.filter(t => t.profitLoss > 0).length;
+    const wins = monthTrades.filter(t => (t.amount || 0) > 0).length;
     monthlyPerformance[month].winRate = monthTrades.length > 0 ? (wins / monthTrades.length) * 100 : 0;
   });
   
@@ -226,7 +226,7 @@ function calculateMedian(values: number[]): number {
   return sorted[middle];
 }
 
-function calculateDrawdown(trades: Trade[]): { maxDrawdown: number, maxDrawdownPercentage: number } {
+function calculateDrawdown(trades: Trade[], valueProperty: 'profitLoss' | 'amount' = 'profitLoss'): { maxDrawdown: number, maxDrawdownPercentage: number } {
   if (trades.length === 0) return { maxDrawdown: 0, maxDrawdownPercentage: 0 };
   
   let balance = 0;
@@ -235,7 +235,8 @@ function calculateDrawdown(trades: Trade[]): { maxDrawdown: number, maxDrawdownP
   let maxDrawdownPercentage = 0;
   
   trades.forEach(trade => {
-    balance += trade.profitLoss;
+    const value = valueProperty === 'amount' ? (trade.amount || 0) : trade.profitLoss;
+    balance += value;
     
     if (balance > peak) {
       peak = balance;
@@ -253,7 +254,7 @@ function calculateDrawdown(trades: Trade[]): { maxDrawdown: number, maxDrawdownP
   return { maxDrawdown, maxDrawdownPercentage };
 }
 
-function calculatePeriodicReturns(trades: Trade[]): number[] {
+function calculatePeriodicReturns(trades: Trade[], valueProperty: 'profitLoss' | 'amount' = 'profitLoss'): number[] {
   // Group trades by day
   const dailyTrades: Record<string, Trade[]> = {};
   
@@ -268,7 +269,10 @@ function calculatePeriodicReturns(trades: Trade[]): number[] {
   // Calculate daily returns
   return Object.keys(dailyTrades).map(date => {
     const dayTrades = dailyTrades[date];
-    return dayTrades.reduce((sum, trade) => sum + trade.profitLoss, 0);
+    return dayTrades.reduce((sum, trade) => {
+      const value = valueProperty === 'amount' ? (trade.amount || 0) : trade.profitLoss;
+      return sum + value;
+    }, 0);
   });
 }
 

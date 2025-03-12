@@ -29,7 +29,9 @@ export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profit
         <DollarSign className="h-3 w-3 inline" />
         {formattedAmount === 0 
           ? "0.00" 
-          : `${isProfitable ? "" : "-"}${Math.abs(formattedAmount).toFixed(2)}`
+          : formattedAmount > 0 
+            ? formattedAmount.toFixed(2)
+            : `-${Math.abs(formattedAmount).toFixed(2)}`
         }
       </span>
     </div>

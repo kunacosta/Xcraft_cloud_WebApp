@@ -25,7 +25,7 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
                 {...field} 
                 readOnly 
                 className="bg-gray-100" 
-                value={field.value || 0} 
+                value={field.value ?? 0} 
               />
             </FormControl>
             <FormMessage />
@@ -46,7 +46,7 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
                 {...field} 
                 readOnly 
                 className="bg-gray-100" 
-                value={field.value || 0} 
+                value={field.value ?? 0} 
               />
             </FormControl>
             <FormMessage />
