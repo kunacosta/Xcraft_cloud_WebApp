@@ -11,27 +11,7 @@ interface ResultFieldsProps {
 
 export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <FormField
-        control={form.control}
-        name="profitLoss"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Profit/Loss (pips)</FormLabel>
-            <FormControl>
-              <Input 
-                type="number" 
-                step="0.01" 
-                {...field} 
-                className="bg-white" 
-                value={field.value ?? 0} 
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
+    <div className="grid grid-cols-1 gap-4">
       <FormField
         control={form.control}
         name="amount"

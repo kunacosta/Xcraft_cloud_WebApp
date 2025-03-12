@@ -4,11 +4,10 @@ import { ArrowDown, ArrowUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProfitLossIndicatorProps {
-  profitLoss: number;
   amount: number;
 }
 
-export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profitLoss, amount }) => {
+export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ amount }) => {
   // Fix for displaying zero values correctly
   const formattedAmount = Math.abs(amount) < 0.005 ? 0 : amount;
   const isProfitable = formattedAmount > 0;
