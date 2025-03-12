@@ -33,7 +33,7 @@ const AdvancedMetricsSection: React.FC<AdvancedMetricsSectionProps> = ({
       
       <StatCard 
         title="Largest Win" 
-        value={`${formatCurrency(stats.largestWin)}`}
+        value={formatCurrency(stats.largestWin)}
         icon={Target}
         description={`vs ${formatCurrency(stats.largestLoss)} largest loss`}
         trend="positive"

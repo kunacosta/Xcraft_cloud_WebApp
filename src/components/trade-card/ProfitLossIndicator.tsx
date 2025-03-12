@@ -13,6 +13,15 @@ export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profit
   const formattedAmount = Math.abs(amount) < 0.005 ? 0 : amount;
   const isProfitable = formattedAmount > 0;
   
+  // Format the value as currency
+  const formatValue = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    }).format(Math.abs(value));
+  };
+  
   return (
     <div className="flex items-center">
       {isProfitable ? 
@@ -26,12 +35,11 @@ export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profit
         formattedAmount > 0 ? "text-green-500" : 
         formattedAmount < 0 ? "text-red-500" : "text-gray-500" // neutral color for zero
       )}>
-        <DollarSign className="h-3 w-3 inline" />
         {formattedAmount === 0 
-          ? "0.00" 
+          ? "$0.00" 
           : formattedAmount > 0 
-            ? formattedAmount.toFixed(2)
-            : `-${Math.abs(formattedAmount).toFixed(2)}`
+            ? formatValue(formattedAmount)
+            : `-${formatValue(formattedAmount)}`
         }
       </span>
     </div>

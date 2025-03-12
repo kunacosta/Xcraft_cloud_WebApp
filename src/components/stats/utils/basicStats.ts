@@ -21,6 +21,7 @@ export const calculateBasicStats = (trades: Trade[]): BasicTradeStats => {
   const winningTradesArr = trades.filter(trade => (trade.amount || 0) > 0);
   const losingTradesArr = trades.filter(trade => (trade.amount || 0) <= 0);
   
+  // Ensure we handle undefined amounts properly
   const totalProfit = winningTradesArr.reduce((sum, trade) => sum + (trade.amount || 0), 0);
   const totalLoss = Math.abs(losingTradesArr.reduce((sum, trade) => sum + (trade.amount || 0), 0));
   const netProfit = trades.reduce((sum, trade) => sum + (trade.amount || 0), 0);

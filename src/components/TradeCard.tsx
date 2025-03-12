@@ -41,7 +41,7 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
         
         <CardFooter className="p-4 flex justify-between bg-gray-50">
           <ProfitLossIndicator 
-            profitLoss={trade.profitLoss} 
+            profitLoss={trade.profitLoss || 0} 
             amount={amount} 
           />
           <CardActions 
