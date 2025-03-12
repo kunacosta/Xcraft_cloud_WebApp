@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { UseFormReturn, useWatch } from 'react-hook-form';
 import { FormValues } from './TradeFormSchema';
@@ -21,31 +22,26 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
   const entryPrice = useWatch({
     control: form.control,
     name: "entryPrice",
-    defaultValue: 0
   });
   
   const exitPrice = useWatch({
     control: form.control,
     name: "exitPrice",
-    defaultValue: 0
   });
   
   const tradeType = useWatch({
     control: form.control,
     name: "tradeType",
-    defaultValue: "buy"
   });
   
   const currencyPair = useWatch({
     control: form.control,
     name: "currencyPair",
-    defaultValue: "EUR/USD"
   });
   
   const lotSize = useWatch({
     control: form.control,
     name: "lotSize",
-    defaultValue: 0.1
   });
 
   // Calculate pips and monetary value whenever relevant values change
@@ -54,12 +50,12 @@ export const TradeFormFields: React.FC<TradeFormFieldsProps> = ({ form }) => {
       // Calculate pips based on the standard formula
       const pips = calculatePips(entryPrice, exitPrice, currencyPair, tradeType);
       
-      // Update the form with the calculated pips
-      form.setValue("profitLoss", Number(pips.toFixed(2)));
-      
       // Calculate the monetary value
       const pipValue = calculatePipValue(currencyPair);
       const monetaryValue = calculateMonetaryValue(pips, pipValue, lotSize);
+      
+      // Update both fields
+      form.setValue("profitLoss", Number(pips.toFixed(2)));
       form.setValue("amount", Number(monetaryValue.toFixed(2)));
     }
   }, [entryPrice, exitPrice, tradeType, currencyPair, lotSize, form]);
