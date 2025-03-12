@@ -37,7 +37,10 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
         </CardContent>
         
         <CardFooter className="p-4 flex justify-between bg-gray-50">
-          <ProfitLossIndicator profitLoss={trade.profitLoss} />
+          <ProfitLossIndicator 
+            profitLoss={trade.profitLoss} 
+            amount={trade.amount || 0} 
+          />
           <CardActions 
             onEdit={() => setIsEditDialogOpen(true)} 
             onDelete={() => deleteTrade(trade.id)} 
@@ -55,3 +58,4 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
 };
 
 export default TradeCard;
+
