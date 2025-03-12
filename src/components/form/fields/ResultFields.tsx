@@ -17,7 +17,7 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
         name="profitLoss"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Profit/Loss (pips) - Auto-calculated</FormLabel>
+            <FormLabel>Profit/Loss (pips)</FormLabel>
             <FormControl>
               <Input type="number" step="0.01" {...field} readOnly className="bg-gray-100" />
             </FormControl>
@@ -31,7 +31,7 @@ export const ResultFields: React.FC<ResultFieldsProps> = ({ form }) => {
         name="amount"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Profit/Loss ($) - Auto-calculated</FormLabel>
+            <FormLabel>Profit/Loss ($)</FormLabel>
             <FormControl>
               <Input type="number" step="0.01" {...field} readOnly className="bg-gray-100" />
             </FormControl>

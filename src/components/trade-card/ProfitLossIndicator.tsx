@@ -1,14 +1,15 @@
 
 import React from 'react';
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, DollarSign } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProfitLossIndicatorProps {
   profitLoss: number;
+  amount: number;
 }
 
-export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profitLoss }) => {
-  const isProfitable = profitLoss > 0;
+export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profitLoss, amount }) => {
+  const isProfitable = amount > 0;
   
   return (
     <div className="flex items-center">
@@ -20,7 +21,8 @@ export const ProfitLossIndicator: React.FC<ProfitLossIndicatorProps> = ({ profit
         "font-medium",
         isProfitable ? "text-green-500" : "text-red-500"
       )}>
-        {isProfitable ? "+" : ""}{profitLoss.toFixed(2)} pips
+        <DollarSign className="h-3 w-3 inline" />
+        {isProfitable ? "" : "-"}{Math.abs(amount).toFixed(2)}
       </span>
     </div>
   );
