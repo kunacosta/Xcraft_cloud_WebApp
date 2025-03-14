@@ -1,5 +1,5 @@
 
-// Pip calculation utilities for forex trading
+// Pip calculation utilities for forex trading - for reference only when manually calculating
 
 // Standard pip sizes
 const PIP_SIZE = {

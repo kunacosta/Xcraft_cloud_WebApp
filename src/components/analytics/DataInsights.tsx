@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Lightbulb, TrendingUp, TrendingDown, CircleDollarSign, BarChart2 } from 'lucide-react';
 import { useTrades } from '@/context/TradeContext';
