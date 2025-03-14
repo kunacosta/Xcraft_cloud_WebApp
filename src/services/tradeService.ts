@@ -128,23 +128,3 @@ export const deleteTradeFromSupabase = async (id: string): Promise<void> => {
     throw error;
   }
 };
-
-// Delete all trades from Supabase for the current user
-export const clearAllTradesFromSupabase = async (): Promise<void> => {
-  // Get current user
-  const { data: { user } } = await supabase.auth.getUser();
-  
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
-  
-  // Delete all trades for the current user
-  const { error } = await supabase
-    .from('trades')
-    .delete()
-    .eq('user_id', user.id);
-  
-  if (error) {
-    throw error;
-  }
-};

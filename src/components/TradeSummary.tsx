@@ -14,10 +14,10 @@ interface TradeSummaryProps {
 }
 
 const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
-  // Calculate summary statistics using our utility with dollar values (amount)
+  // Calculate summary statistics using our utility
   const stats = calculateTradeStatistics(trades);
 
-  // Find best performing pair (using dollar values)
+  // Find best performing pair
   let bestPair = { pair: '', profit: -Infinity };
   Object.entries(stats.tradesByPair).forEach(([pair, data]) => {
     if (data.profit > bestPair.profit) {
@@ -25,7 +25,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trades }) => {
     }
   });
   
-  // Find best performing strategy (using dollar values)
+  // Find best performing strategy
   let bestStrategy = { strategy: '', profit: -Infinity };
   Object.entries(stats.tradesByStrategy).forEach(([strategy, data]) => {
     if (data.profit > bestStrategy.profit && strategy !== 'Unknown') {

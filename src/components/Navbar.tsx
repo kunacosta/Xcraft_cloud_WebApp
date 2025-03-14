@@ -56,6 +56,10 @@ const Navbar = () => {
         </nav>
         
         <div className="flex items-center gap-4">
+          <div className="hidden md:block py-1.5 px-3 rounded-full text-xs font-medium text-blue-700 bg-blue-50 border border-blue-100">
+            Beta v1.0
+          </div>
+          
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -118,6 +122,11 @@ const Navbar = () => {
                 <MobileNavLink to="/settings" label="Settings" icon={Settings} onClick={() => setIsMobileMenuOpen(false)} />
               </>
             )}
+            <div className="pt-2 mt-2 border-t border-gray-100">
+              <div className="py-1.5 px-3 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-100 rounded-full inline-block">
+                Beta v1.0
+              </div>
+            </div>
           </div>
         </div>
       )}

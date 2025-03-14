@@ -30,7 +30,7 @@ const PerformanceSection: React.FC<PerformanceSectionProps> = ({ stats, formatCu
       
       <StatCard 
         title="Avg. Win" 
-        value={formatCurrency(stats.avgProfit)}
+        value={`${formatCurrency(stats.avgProfit)}`}
         icon={ArrowUp}
         description={`Total: ${formatCurrency(stats.totalProfit)}`}
         trend="positive"
@@ -38,7 +38,7 @@ const PerformanceSection: React.FC<PerformanceSectionProps> = ({ stats, formatCu
       
       <StatCard 
         title="Avg. Loss" 
-        value={formatCurrency(stats.avgLoss)}
+        value={`${formatCurrency(stats.avgLoss)}`}
         icon={ArrowDown}
         description={`Risk/Reward: ${typeof stats.riskRewardRatio === 'number' ? stats.riskRewardRatio.toFixed(2) : stats.riskRewardRatio}`}
         trend="negative"

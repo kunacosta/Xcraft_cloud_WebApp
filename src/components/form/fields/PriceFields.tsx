@@ -19,14 +19,7 @@ export const PriceFields: React.FC<PriceFieldsProps> = ({ form }) => {
           <FormItem>
             <FormLabel>Entry Price</FormLabel>
             <FormControl>
-              <Input 
-                type="number" 
-                step="0.00001" 
-                {...field} 
-                onChange={(e) => {
-                  field.onChange(parseFloat(e.target.value) || 0);
-                }}
-              />
+              <Input type="number" step="0.00001" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -40,14 +33,7 @@ export const PriceFields: React.FC<PriceFieldsProps> = ({ form }) => {
           <FormItem>
             <FormLabel>Exit Price</FormLabel>
             <FormControl>
-              <Input 
-                type="number" 
-                step="0.00001" 
-                {...field} 
-                onChange={(e) => {
-                  field.onChange(parseFloat(e.target.value) || 0);
-                }}
-              />
+              <Input type="number" step="0.00001" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -61,14 +47,7 @@ export const PriceFields: React.FC<PriceFieldsProps> = ({ form }) => {
           <FormItem>
             <FormLabel>Lot Size</FormLabel>
             <FormControl>
-              <Input 
-                type="number" 
-                step="0.01" 
-                {...field} 
-                onChange={(e) => {
-                  field.onChange(parseFloat(e.target.value) || 0);
-                }}
-              />
+              <Input type="number" step="0.01" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
