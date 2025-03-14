@@ -7,8 +7,7 @@ export interface Trade {
   entryPrice: number;
   exitPrice: number;
   tradeType: TradeType;
-  profitLoss: number; // In pips
-  amount?: number; // Optional monetary amount
+  amount: number; // Monetary value (in dollars)
   notes: string;
   date: string | Date;
   lotSize: number;

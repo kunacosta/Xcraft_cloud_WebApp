@@ -20,7 +20,7 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
   const { deleteTrade } = useTrades();
   const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
   
-  const isProfitable = trade.profitLoss > 0;
+  const isProfitable = trade.amount > 0;
   
   return (
     <>
@@ -37,7 +37,7 @@ const TradeCard: React.FC<TradeCardProps> = ({ trade }) => {
         </CardContent>
         
         <CardFooter className="p-4 flex justify-between bg-gray-50">
-          <ProfitLossIndicator profitLoss={trade.profitLoss} />
+          <ProfitLossIndicator amount={trade.amount} />
           <CardActions 
             onEdit={() => setIsEditDialogOpen(true)} 
             onDelete={() => deleteTrade(trade.id)} 
