@@ -21,11 +21,8 @@ const iconComponents = {
 };
 
 const InsightItem: React.FC<InsightItemProps> = ({ insight }) => {
-  // Convert the icon string to the actual component
-  const IconComponent = 
-    typeof insight.icon === 'string' 
-      ? iconComponents[insight.icon as keyof typeof iconComponents]
-      : insight.icon;
+  // Get the correct icon component
+  const IconComponent = iconComponents[insight.icon as keyof typeof iconComponents] || TrendingUp;
 
   return (
     <div className="flex items-start">
