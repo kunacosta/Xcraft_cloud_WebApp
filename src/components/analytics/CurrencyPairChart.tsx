@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { CircleDollarSign } from 'lucide-react';
@@ -21,7 +20,7 @@ const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
         acc[pair] = { name: pair, value: 0, profitLoss: 0, count: 0 };
       }
       acc[pair].value += 1;
-      acc[pair].profitLoss += trade.profitLoss;
+      acc[pair].profitLoss += trade.amount;
       acc[pair].count += 1;
       
       return acc;

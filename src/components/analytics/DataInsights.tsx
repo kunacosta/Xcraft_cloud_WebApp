@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Lightbulb, TrendingUp, TrendingDown, CircleDollarSign, BarChart2 } from 'lucide-react';
 import { useTrades } from '@/context/TradeContext';
@@ -13,18 +12,18 @@ const DataInsights: React.FC = () => {
     const insights = [];
     
     // Calculate total P/L
-    const totalPL = trades.reduce((sum, trade) => sum + trade.profitLoss, 0);
+    const totalPL = trades.reduce((sum, trade) => sum + trade.amount, 0);
     const isPositive = totalPL > 0;
     
     // Calculate win rate
-    const winningTrades = trades.filter(t => t.profitLoss > 0);
+    const winningTrades = trades.filter(t => t.amount > 0);
     const winRate = (winningTrades.length / trades.length) * 100;
     
     // Most profitable currency pair
     const pairProfits = trades.reduce((acc, trade) => {
       const pair = trade.currencyPair;
       if (!acc[pair]) acc[pair] = 0;
-      acc[pair] += trade.profitLoss;
+      acc[pair] += trade.amount;
       return acc;
     }, {} as Record<string, number>);
     
@@ -36,8 +35,8 @@ const DataInsights: React.FC = () => {
     const buyTrades = trades.filter(t => t.tradeType === 'buy');
     const sellTrades = trades.filter(t => t.tradeType === 'sell');
     
-    const buyPL = buyTrades.reduce((sum, t) => sum + t.profitLoss, 0);
-    const sellPL = sellTrades.reduce((sum, t) => sum + t.profitLoss, 0);
+    const buyPL = buyTrades.reduce((sum, t) => sum + t.amount, 0);
+    const sellPL = sellTrades.reduce((sum, t) => sum + t.amount, 0);
     
     const bestTradeType = buyPL > sellPL ? 'buy' : 'sell';
     const bestTradeTypePL = bestTradeType === 'buy' ? buyPL : sellPL;

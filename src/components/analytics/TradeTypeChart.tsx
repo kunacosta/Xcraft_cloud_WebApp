@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { BarChart3 } from 'lucide-react';
@@ -15,15 +14,15 @@ const TradeTypeChart: React.FC<TradeTypeChartProps> = ({ trades }) => {
     const buyTrades = trades.filter(t => t.tradeType === 'buy');
     const sellTrades = trades.filter(t => t.tradeType === 'sell');
     
-    const buyProfit = buyTrades.reduce((sum, t) => sum + (t.profitLoss > 0 ? 1 : 0), 0);
+    const buyProfit = buyTrades.reduce((sum, t) => sum + (t.amount > 0 ? 1 : 0), 0);
     const buyLoss = buyTrades.length - buyProfit;
-    const buyProfitSum = buyTrades.reduce((sum, t) => sum + (t.profitLoss > 0 ? t.profitLoss : 0), 0);
-    const buyLossSum = buyTrades.reduce((sum, t) => sum + (t.profitLoss < 0 ? t.profitLoss : 0), 0);
+    const buyProfitSum = buyTrades.reduce((sum, t) => sum + (t.amount > 0 ? t.amount : 0), 0);
+    const buyLossSum = buyTrades.reduce((sum, t) => sum + (t.amount < 0 ? t.amount : 0), 0);
     
-    const sellProfit = sellTrades.reduce((sum, t) => sum + (t.profitLoss > 0 ? 1 : 0), 0);
+    const sellProfit = sellTrades.reduce((sum, t) => sum + (t.amount > 0 ? 1 : 0), 0);
     const sellLoss = sellTrades.length - sellProfit;
-    const sellProfitSum = sellTrades.reduce((sum, t) => sum + (t.profitLoss > 0 ? t.profitLoss : 0), 0);
-    const sellLossSum = sellTrades.reduce((sum, t) => sum + (t.profitLoss < 0 ? t.profitLoss : 0), 0);
+    const sellProfitSum = sellTrades.reduce((sum, t) => sum + (t.amount > 0 ? t.amount : 0), 0);
+    const sellLossSum = sellTrades.reduce((sum, t) => sum + (t.amount < 0 ? t.amount : 0), 0);
     
     return [
       { 

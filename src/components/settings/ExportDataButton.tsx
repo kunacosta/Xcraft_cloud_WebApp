@@ -17,8 +17,7 @@ export const ExportDataButton = () => {
         'Entry Price',
         'Exit Price',
         'Lot Size',
-        'Profit/Loss (pips)',
-        'Amount',
+        'Profit/Loss ($)',
         'Strategy',
         'Notes',
         'Date'
@@ -42,7 +41,6 @@ export const ExportDataButton = () => {
           trade.entryPrice,
           trade.exitPrice,
           trade.lotSize,
-          trade.profitLoss,
           trade.amount || 0,
           escapeCsvField(trade.strategy || ''),
           escapeCsvField(trade.notes || ''),

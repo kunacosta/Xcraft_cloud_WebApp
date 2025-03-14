@@ -20,7 +20,7 @@ export const fetchTrades = async (): Promise<Trade[]> => {
     entryPrice: trade.entry_price,
     exitPrice: trade.exit_price,
     tradeType: trade.type as TradeType,
-    profitLoss: trade.profit,
+    amount: trade.profit || 0, // Use 'profit' field from database as 'amount'
     notes: trade.notes || '',
     date: trade.date,
     lotSize: trade.quantity || 1,
@@ -33,7 +33,7 @@ export const fetchTrades = async (): Promise<Trade[]> => {
 
 // Add a new trade to Supabase
 export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> => {
-  const { profitLoss, currencyPair, tradeType, entryPrice, exitPrice, lotSize, notes, strategy, date } = newTrade;
+  const { amount, currencyPair, tradeType, entryPrice, exitPrice, lotSize, notes, strategy, date } = newTrade;
   
   // Get the current user
   const { data: { user } } = await supabase.auth.getUser();
@@ -54,7 +54,7 @@ export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> 
       entry_price: entryPrice,
       exit_price: exitPrice,
       quantity: lotSize,
-      profit: profitLoss,
+      profit: amount, // Use 'amount' as 'profit' in database
       notes: notes,
       strategy: strategy || null,
       date: formattedDate,
@@ -74,7 +74,7 @@ export const addTradeToSupabase = async (newTrade: TradeInsert): Promise<Trade> 
     entryPrice: data.entry_price,
     exitPrice: data.exit_price,
     tradeType: data.type as TradeType,
-    profitLoss: data.profit,
+    amount: data.profit || 0,
     notes: data.notes || '',
     date: data.date,
     lotSize: data.quantity || 1,
@@ -95,7 +95,7 @@ export const editTradeInSupabase = async (id: string, updatedTrade: TradeUpdate)
   if (updatedTrade.entryPrice !== undefined) updateData.entry_price = updatedTrade.entryPrice;
   if (updatedTrade.exitPrice !== undefined) updateData.exit_price = updatedTrade.exitPrice;
   if (updatedTrade.lotSize !== undefined) updateData.quantity = updatedTrade.lotSize;
-  if (updatedTrade.profitLoss !== undefined) updateData.profit = updatedTrade.profitLoss;
+  if (updatedTrade.amount !== undefined) updateData.profit = updatedTrade.amount;
   if (updatedTrade.notes !== undefined) updateData.notes = updatedTrade.notes;
   if (updatedTrade.strategy !== undefined) updateData.strategy = updatedTrade.strategy;
   

@@ -34,7 +34,7 @@ const TradeLog = () => {
       } else if (sortBy === 'oldest') {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       } else if (sortBy === 'profit') {
-        return b.profitLoss - a.profitLoss;
+        return b.amount - a.amount;
       }
       return 0;
     });

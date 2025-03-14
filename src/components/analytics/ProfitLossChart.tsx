@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp } from 'lucide-react';
@@ -19,7 +18,7 @@ const ProfitLossChart: React.FC<ProfitLossChartProps> = ({ trades }) => {
         acc[date] = { date, profit: 0, loss: 0, netPL: 0 };
       }
       
-      const pl = trade.profitLoss;
+      const pl = trade.amount;
       if (pl > 0) {
         acc[date].profit += pl;
       } else {
