@@ -4,12 +4,21 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recha
 import { CircleDollarSign } from 'lucide-react';
 import ChartCard from './ChartCard';
 import { Trade } from '@/types/trade';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 interface CurrencyPairChartProps {
   trades: Trade[];
 }
 
-const COLORS = ['#3b82f6', '#60a5fa', '#93c5fd', '#0ea5e9', '#38bdf8', '#7dd3fc'];
+// More vibrant and visually distinct color palette
+const COLORS = [
+  '#8B5CF6', // Vivid Purple
+  '#D946EF', // Magenta Pink
+  '#F97316', // Bright Orange
+  '#0EA5E9', // Ocean Blue
+  '#10B981', // Emerald Green
+  '#EC4899', // Pink
+];
 
 const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
   // Prepare data for chart
@@ -44,10 +53,10 @@ const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-3 border border-gray-200 rounded-md shadow-md">
+        <div className="bg-white p-3 border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700">
           <p className="font-medium text-sm">{data.name}</p>
-          <p className="text-sm text-gray-600">Trades: {data.count}</p>
-          <p className={`text-sm font-medium ${data.profitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Trades: {data.count}</p>
+          <p className={`text-sm font-medium ${data.profitLoss >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
             P/L: {formatCurrency(data.profitLoss)}
           </p>
         </div>
@@ -55,6 +64,12 @@ const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
     }
     return null;
   };
+
+  // Create config for chart component
+  const chartConfig = currencyPairData.reduce((config, _, index) => {
+    config[`data-${index}`] = { color: COLORS[index % COLORS.length] };
+    return config;
+  }, {} as Record<string, { color: string }>);
 
   return (
     <ChartCard 
@@ -64,19 +79,23 @@ const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
     >
       <div className="h-[280px] flex items-center justify-center">
         {currencyPairData.length > 0 ? (
-          <ResponsiveContainer width="100%" height="100%">
+          <ChartContainer config={chartConfig} className="w-full h-full">
             <PieChart>
               <Pie
                 data={currencyPairData}
                 cx="50%"
                 cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                outerRadius={100}
+                labelLine={true}
+                outerRadius={85}
+                innerRadius={40}
                 fill="#8884d8"
                 dataKey="value"
-                paddingAngle={3}
+                paddingAngle={4}
                 animationDuration={800}
+                label={({ name, percent }) => {
+                  // Only show name for segments with enough room (more than 10%)
+                  return percent > 0.1 ? `${name} (${(percent * 100).toFixed(0)}%)` : '';
+                }}
               >
                 {currencyPairData.map((entry, index) => (
                   <Cell 
@@ -87,7 +106,7 @@ const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
                   />
                 ))}
               </Pie>
-              <Tooltip content={<CustomTooltip />} />
+              <ChartTooltip content={<CustomTooltip />} />
               <Legend 
                 layout="horizontal" 
                 verticalAlign="bottom" 
@@ -99,7 +118,7 @@ const CurrencyPairChart: React.FC<CurrencyPairChartProps> = ({ trades }) => {
                 }}
               />
             </PieChart>
-          </ResponsiveContainer>
+          </ChartContainer>
         ) : (
           <div className="text-gray-500 text-center">
             Not enough currency pair data
