@@ -1,69 +1,62 @@
-# Welcome to your Lovable project
 
-## Project info
+# Forex Trading Journal - Mobile App
 
-**URL**: https://lovable.dev/projects/236074cf-93c4-415b-a21b-df82f6f0c411
+This forex trading journal app allows you to track and analyze your trades on both web and mobile devices.
 
-## How can I edit this code?
+## Running the Mobile App
 
-There are several ways of editing your application.
+To run this app on a mobile device, follow these steps:
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/236074cf-93c4-415b-a21b-df82f6f0c411) and start prompting.
+- Node.js and NPM installed
+- For Android: Android Studio installed
+- For iOS: Xcode installed (Mac only)
 
-Changes made via Lovable will be committed automatically to this repo.
+### Steps to Run the App
 
-**Use your preferred IDE**
+1. Clone this repository to your local machine
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Build the web app:
+   ```
+   npm run build
+   ```
+4. Sync the build with Capacitor:
+   ```
+   npx cap sync
+   ```
+5. Add Android platform (if not already added):
+   ```
+   npx cap add android
+   ```
+6. Open the project in Android Studio:
+   ```
+   npx cap open android
+   ```
+7. Run the app on your device or emulator from Android Studio
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Development
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+During development, you can make changes to the web app and then:
 
-Follow these steps:
+1. Rebuild the web app:
+   ```
+   npm run build
+   ```
+2. Sync with Capacitor:
+   ```
+   npx cap sync
+   ```
+3. Run on your device again
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Features
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Track forex trades with detailed metrics
+- Analyze performance with visual charts
+- Review trading history
+- Identify patterns in your trading behavior
+- Mobile-friendly design
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/236074cf-93c4-415b-a21b-df82f6f0c411) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
